@@ -4,18 +4,18 @@ import TableThree from '../components/TableThree';
 import TableTwo from '../components/TableTwo';
 import DefaultLayout from '../layout/DefaultLayout';
 
-const Tables = () => {
+const Products = () => {
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Tables" />
+      <Breadcrumb pageName="Products" />
 
       <div className="flex flex-col gap-10">
-        <TableOne />
         <TableTwo />
+        <TableOne />
         <TableThree />
       </div>
     </DefaultLayout>
   );
 };
 
-export default Tables;
+export default Products;

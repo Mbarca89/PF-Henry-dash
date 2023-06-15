@@ -2,8 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserOne from '../images/user/user-01.png';
+import { RootState, useAppDispatch, useAppSelector } from '../store';
+import { getUser } from '../store/thunks';
 
 const DropdownUser = () => {
+  const user = useAppSelector((state:RootState) => state.user.userData)
+  const dispatch = useAppDispatch();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -11,6 +15,8 @@ const DropdownUser = () => {
 
   // close on click outside
   useEffect(() => {
+    dispatch(getUser())
+    
     const clickHandler = ({ target }: MouseEvent) => {
       if (!dropdown.current) return;
       if (
@@ -23,7 +29,7 @@ const DropdownUser = () => {
     };
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
-  });
+  },[]);
 
   // close if the esc key is pressed
   useEffect(() => {
@@ -45,9 +51,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {user.name}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">{user.role.toUpperCase()}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">

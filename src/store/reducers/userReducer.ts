@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Products, User } from '../../types';
 import { getProducts, getUser } from '../thunks';
+import { formValues } from '../../pages/Form/FormPostProduct';
 
 type userState = {
   userData: User;
@@ -56,6 +57,10 @@ export const counterSlice = createSlice({
     builder.addCase(getProducts.fulfilled, (state, action) => {
       state.products = [...action.payload];
     });
+
+    // builder.addCase(postProduct.fulfilled, (state, action: PayloadAction<formValues>) => {
+    //   state.products = [...action.payload];
+    // });
 
     // TODO: create Product
   },

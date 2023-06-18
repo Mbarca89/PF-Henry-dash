@@ -17,6 +17,8 @@ export type formValues = {
     photos: FormData
 }
 
+let images: FileList
+
 const FormPostProduct = () => {
 
     const dispatch = useAppDispatch();
@@ -66,29 +68,31 @@ const FormPostProduct = () => {
 
 
     // handling images files 
-    const [images, setImages] = useState<File[]>();
+
     let formData = new FormData();
 
     const onChangeImages = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.files);
         if (e.target.files) {
-            const files = Array.from(e.target.files)
-
-            console.log(files);
-            files.map(file => {
-                formData.append(file.name, file);
-            })
-            console.log({ formData });
-
+            images = e.target.files
         }
+        console.log(images)
     };
 
 
     // Post product
     const postProduct = async (data: formValues) => {
+        let formData = new FormData();
+
+        formData.append('data', JSON.stringify(currentPostProduct))
+        console.log(images)
+        for (let i = 0; i < images.length; i++) {
+            formData.append('photos', images[i])
+        }
+
+        
         return await axios.post(
             'https://pf-henry-back-two.vercel.app/products/post',
-            data
+            formData
         );
     }
 
@@ -97,12 +101,12 @@ const FormPostProduct = () => {
 
         if (isSubmitted) {
             if (isSubmitSuccessful) {
-                reset()
+                
                 dispatch(hiddenPostProductModal())
 
                 postProduct(currentPostProduct as formValues).then(response => {
                     console.log(response);
-                    
+
                     dispatch(activeToast({
                         isOk: true,
                         message: `El producto ${response?.data?.name} fue creado exitosamente`
@@ -114,6 +118,7 @@ const FormPostProduct = () => {
                         message: `Ocurrio un problema. ${error?.response?.data}`
                     }))
                 })
+                reset()
             }
         }
 

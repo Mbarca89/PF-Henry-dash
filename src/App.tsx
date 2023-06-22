@@ -13,10 +13,12 @@ import Settings from './pages/Settings';
 import Products from './pages/Products';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
+import LoginForm from './pages/Form/LoginForm/LoginForm';
 
 function App() {
 
   const [loading, setLoading] = useState<boolean>(true);
+  const [session, setSession] = useState<boolean>(true)
 
   const preloader = document.getElementById('preloader');
 
@@ -28,14 +30,14 @@ function App() {
   }
 
   useEffect(() => {
-    
+
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
   return loading ? (
     <p className=" text-center text-danger">Failed to lead app</p>
   ) : (
-    <>
+    (session ? <LoginForm /> : <>
       <Routes>
         <Route path="/" element={<ECommerce />} />
         <Route path="/calendar" element={<Calendar />} />
@@ -50,7 +52,8 @@ function App() {
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
       </Routes>
-    </>
+    </>)
+
   );
 }
 

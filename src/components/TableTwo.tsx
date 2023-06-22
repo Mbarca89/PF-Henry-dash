@@ -28,7 +28,7 @@ const TableTwo = () => {
   }
 
   useEffect(() => {
-    console.log("table two");
+    console.log("products");
     
     dispatch(getProducts());
     setTimeout(() => setLoading(false), 1000);

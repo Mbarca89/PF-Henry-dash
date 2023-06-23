@@ -1,16 +1,20 @@
 //User
 export interface User {
-    name:       string;
-    email:      string;
-    password:   string;
-    address:    string;
-    city:       string;
-    province:   string;
-    postalCode: number;
-    role:       string;
-    cart:       string;
-    id:         string;
+    name:              string;
+    email:             string;
+    password?:          string;
+    address:           string;
+    city:              string;
+    province:          string;
+    postalCode:        number;
+    role:              string;
+    phone?:            string;
+    commerceName?:     string;
+    purchasedProducts?: any[];
+    cart:              string;
+    id:                string;
 }
+
 //Products
 export interface Products {
     name:         string;

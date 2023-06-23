@@ -7,14 +7,15 @@ export const getUser = createAsyncThunk('user/get', async (thunkApi) => {
   );
 
   console.log(response);
-  
+
   const data = response.data[1];
-  return data
+  return data;
 });
+
 
 export const getProducts = createAsyncThunk(
   'products/get',
-  async (thunkApi) => {
+  async (userID: string, thunkApi) => {
     // const response = await axios.post(
     //   'https://pf-henry-back-two.vercel.app/products?page=2',
     //   {
@@ -22,13 +23,11 @@ export const getProducts = createAsyncThunk(
     //     relevant: { isSorted: false, order: 'asc' },
     //   }
     // );
-
-    const response = await axios.post(
-      `https://pf-henry-back-two.vercel.app/6491c131b90b2ebad884db17`);
-
-    console.log(response);
     
-    return response.data.products;
+    const response = await axios.get(
+      `https://pf-henry-back-two.vercel.app/products/${userID}`
+    );
+
+    return response.data;
   }
 );
-

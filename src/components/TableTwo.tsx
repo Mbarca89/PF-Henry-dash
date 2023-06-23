@@ -7,6 +7,7 @@ const TableTwo = () => {
   const products = useAppSelector((state: RootState) => state.user.products)
   const toastModal = useAppSelector((state: RootState) => state.modals.toastModal)
   const dispatch = useAppDispatch();
+  const currentUser = useAppSelector((state: RootState) => state.user.userData)
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -27,12 +28,16 @@ const TableTwo = () => {
     toastModal.isActive && dispatch(clearStateToast())
   }
 
+  const onUpdateProduct = () => {
+    dispatch(activePostProductModal());
+  }
+
   useEffect(() => {
     console.log("products");
     
-    dispatch(getProducts());
+    dispatch(getProducts(currentUser.id));
     setTimeout(() => setLoading(false), 1000);
-  }, [])
+  }, [currentUser])
 
 
   return loading ? (
@@ -80,7 +85,7 @@ const TableTwo = () => {
                   <div className="h-12.5 w-15 rounded-md">
                     <img src={product?.photos[0]?.url} alt="Product" />
                   </div>
-                  <p className="text-sm text-black dark:text-white">
+                  <p className="text-sm text-black dark:text-white hover:underline hover:cursor-pointer" onClick={onUpdateProduct}>
                     {product.name}
                   </p>
                 </div>

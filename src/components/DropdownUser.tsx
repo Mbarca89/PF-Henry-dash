@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import UserOne from '../images/user/user-01.png';
 import { RootState, useAppDispatch, useAppSelector } from '../store';
 import { getUser } from '../store/thunks';
+import { setCurrentUser, setSession } from '../store/reducers/userReducer';
 
 const DropdownUser = () => {
   const user = useAppSelector((state:RootState) => state.user.userData)
@@ -13,9 +14,19 @@ const DropdownUser = () => {
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
+  // onLogout
+  const onLogout = () => {
+    localStorage.removeItem("user");
+    // window.location.href="/";
+    dispatch(setSession(false));
+  }
+  // onLogout
+
+
+
   // close on click outside
   useEffect(() => {
-    dispatch(getUser())
+    // dispatch(getUser())
     
     const clickHandler = ({ target }: MouseEvent) => {
       if (!dropdown.current) return;
@@ -41,6 +52,15 @@ const DropdownUser = () => {
     return () => document.removeEventListener('keydown', keyHandler);
   });
 
+
+  useEffect(() => {
+    // const item = localStorage.getItem("user");
+    // if(item){
+    //   dispatch(setCurrentUser({...JSON.parse(item)}))
+    // }
+  }, [user])
+  
+
   return (
     <div className="relative">
       <Link
@@ -53,7 +73,7 @@ const DropdownUser = () => {
           <span className="block text-sm font-medium text-black dark:text-white">
             {user.name}
           </span>
-          <span className="block text-xs">{user.role.toUpperCase()}</span>
+          <span className="block text-xs">{user.role}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
@@ -161,7 +181,7 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base" onClick={onLogout}>
           <svg
             className="fill-current"
             width="22"

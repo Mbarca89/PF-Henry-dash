@@ -3,7 +3,14 @@ import { toast } from 'react-hot-toast';
 
 export interface modelState {
   postProductModalisActive: boolean;
-  postAddOtherProductModalisActive: boolean;
+  valuesPostModalProducts: {
+    name: string,
+    category?: string,
+    freeShipping: boolean,
+    description: string,
+    price: number,
+    stock: number,
+}
   toastModal: {
     isActive: boolean;
     message: string;
@@ -13,7 +20,14 @@ export interface modelState {
 
 const initialState: modelState = {
   postProductModalisActive: false,
-  postAddOtherProductModalisActive: false,
+  valuesPostModalProducts: {
+    name: "",
+    category:"",
+    freeShipping:false,
+    description:'',
+    price: 0,
+    stock: 1,
+  },
   toastModal: {
     isActive: false,
     message: '',
@@ -30,12 +44,6 @@ export const modalSlice = createSlice({
     },
     hiddenPostProductModal: (state) => {
       state.postProductModalisActive = false;
-    },
-    activePostAddOtherModal: (state) => {
-      state.postAddOtherProductModalisActive = true;
-    },
-    hiddenPostAddOtherModal: (state) => {
-      state.postAddOtherProductModalisActive = false;
     },
     activeToast: (
       state,
@@ -59,8 +67,6 @@ export const modalSlice = createSlice({
 
 export const {
   activePostProductModal,
-  activePostAddOtherModal,
-  hiddenPostAddOtherModal,
   hiddenPostProductModal,
   activeToast,
   clearStateToast,

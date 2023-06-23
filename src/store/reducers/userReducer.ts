@@ -6,6 +6,7 @@ import { formValues } from '../../pages/Form/FormPostProduct';
 type userState = {
   userData: User;
   products: Products[];
+  session: boolean
   // customers: Customers[]
 };
 
@@ -18,6 +19,9 @@ const initialState: userState = {
     city: '',
     province: '',
     postalCode: 0,
+    phone: "",
+    commerceName: "",
+    purchasedProducts: [],
     role: '',
     cart: '',
     id: '',
@@ -42,13 +46,21 @@ const initialState: userState = {
       id: '',
     },
   ],
+  session: false
   // customers: [],
 };
 
 export const counterSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    setSession: (state, action: PayloadAction<boolean>) => {
+      state.session = action.payload;
+    },
+    setCurrentUser: (state, action: PayloadAction<User>) => {
+      state.userData = action.payload
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.userData = action.payload;
@@ -66,6 +78,6 @@ export const counterSlice = createSlice({
   },
 });
 
-export const {} = counterSlice.actions;
+export const { setSession, setCurrentUser } = counterSlice.actions;
 
 export default counterSlice.reducer;

@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { useForm, FieldErrors } from "react-hook-form";
 import { DevTool } from "@hookform/devtools"
 import { RootState, useAppDispatch, useAppSelector } from "../../store"
-import { activePostAddOtherModal, activeToast, hiddenPostAddOtherModal, hiddenPostProductModal } from "../../store/reducers/modalReducer";
+import { activeToast, hiddenPostProductModal } from "../../store/reducers/modalReducer";
 import axios from "axios";
-import { Products } from "../../types";
 import { getProducts } from "../../store/thunks";
 
 export type formValues = {
@@ -26,12 +25,12 @@ const FormPostProduct = () => {
 
     // products reducer
     const products = useAppSelector((state: RootState) => state.user.products)
-    const postAddOtherProductModalisActive = useAppSelector((state: RootState) => state.modals.postAddOtherProductModalisActive)
+    const currentUser = useAppSelector((state: RootState) => state.user.userData)
 
     // control form Post Product
     const form = useForm<formValues>({
         // defaultValues: async () => {
-        //     const = response = await axios(ENDPOINT);
+        //     const response = await axios(`https://pf-henry-back-two.vercel.app/products/${currentUser.id}`);
         //     const data = response.data;
         //     return {
         //         name: "",
@@ -42,7 +41,7 @@ const FormPostProduct = () => {
         //         stock: 0,
         //         photos: []
         //     }
-        // }
+        // },
         mode: "all"
     });
     const { register, control, handleSubmit, formState, reset } = form;
@@ -89,7 +88,7 @@ const FormPostProduct = () => {
             formData.append('photos', images[i])
         }
 
-        
+
         return await axios.post(
             'https://pf-henry-back-two.vercel.app/products/post',
             formData
@@ -101,7 +100,7 @@ const FormPostProduct = () => {
 
         if (isSubmitted) {
             if (isSubmitSuccessful) {
-                
+
                 dispatch(hiddenPostProductModal())
 
                 postProduct(currentPostProduct as formValues).then(response => {
@@ -111,8 +110,10 @@ const FormPostProduct = () => {
                         isOk: true,
                         message: `El producto ${response?.data?.name} fue creado exitosamente`
                     }))
-                    dispatch(getProducts())
+                    dispatch(getProducts(currentUser.id))
                 }).catch(error => {
+                    console.log(error);
+
                     dispatch(activeToast({
                         isOk: false,
                         message: `Ocurrio un problema. ${error?.response?.data}`
@@ -145,25 +146,25 @@ const FormPostProduct = () => {
                                                 message: "El nombre es invalido."
                                             },
                                             validate: {
-                                                nameAlreadyExist: async (fieldValue) => {
-                                                    const response = await axios.post(
-                                                        'https://pf-henry-back-two.vercel.app/products?page=1',
-                                                        {
-                                                            price: { isSorted: true, order: 'desc' },
-                                                            relevant: { isSorted: false, order: 'asc' },
-                                                        }
-                                                    );
+                                                // nameAlreadyExist: async (fieldValue) => {
+                                                //     const response = await axios.post(
+                                                //         'https://pf-henry-back-two.vercel.app/products?page=1',
+                                                //         {
+                                                //             price: { isSorted: true, order: 'desc' },
+                                                //             relevant: { isSorted: false, order: 'asc' },
+                                                //         }
+                                                //     );
 
-                                                    // Si ya existe un producto con ese nombre
-                                                    let alreadyExistProduct = false;
-                                                    if (response.data.products?.find((product: Products) => (product.name.toLowerCase() == fieldValue.toLowerCase()))) {
-                                                        alreadyExistProduct = false;
-                                                    } else {
-                                                        alreadyExistProduct = true;
-                                                    }
+                                                //     // Si ya existe un producto con ese nombre
+                                                //     let alreadyExistProduct = false;
+                                                //     if (response.data.products?.find((product: Products) => (product.name.toLowerCase() == fieldValue.toLowerCase()))) {
+                                                //         alreadyExistProduct = false;
+                                                //     } else {
+                                                //         alreadyExistProduct = true;
+                                                //     }
 
-                                                    return alreadyExistProduct || "Ya existe un producto con ese nombre."
-                                                }
+                                                //     return alreadyExistProduct || "Ya existe un producto con ese nombre."
+                                                // }
                                             },
                                         })} id="nameProduct" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full" placeholder="nombre del producto" />
                                     </div>

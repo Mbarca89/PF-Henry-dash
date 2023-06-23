@@ -320,7 +320,7 @@ span.flatpickr-weekday,
   overflow: hidden;
   width: 768px;
   max-width: 100%;
-  min-height: 500px;
+  min-height: 850px;
 }
 
 .formContainer{
@@ -463,5 +463,9 @@ span.flatpickr-weekday,
   transform: scale(110%);
   border: 1px solid #54d887;
 }
+
+/* @media screen and (min-heig){
+  
+} */
 
 /* Login Form */

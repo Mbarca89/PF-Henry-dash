@@ -320,7 +320,7 @@ span.flatpickr-weekday,
   overflow: hidden;
   width: 768px;
   max-width: 100%;
-  min-height: 850px;
+  min-height: 550px;
 }
 
 .formContainer{
@@ -328,6 +328,15 @@ span.flatpickr-weekday,
   top: 0;
   height: 100%;
   transition: all 0.6s ease-in-out;
+}
+
+.registerForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-content: center;
+  width: auto;
+  grid-gap: 0 1px;
 }
 
 .loginContainer {
@@ -338,6 +347,8 @@ span.flatpickr-weekday,
 
 .container.right-panel-active .loginContainer {
   transform: translateX(100%);
+  /* aqui */
+  opacity: 0;
 }
 
 .registerContainer{
@@ -376,6 +387,7 @@ span.flatpickr-weekday,
   width: 50%;
   height: 100%;
   overflow: hidden;
+  /* overflow-y: scroll; */
   transition: transform 0.6s ease-in-out;
   z-index: 100;
 }

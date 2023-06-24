@@ -1,5 +1,7 @@
 import ModalPostProduct from "./ModalPostProduct";
+import ModalUpdateProduct from "./ModalUpdateProduct";
 
 export {
-    ModalPostProduct
+    ModalPostProduct,
+    ModalUpdateProduct
 }

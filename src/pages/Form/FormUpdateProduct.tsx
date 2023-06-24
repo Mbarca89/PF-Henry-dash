@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm, FieldErrors } from "react-hook-form";
 import { DevTool } from "@hookform/devtools"
 import { RootState, useAppDispatch, useAppSelector } from "../../store"
-import { activeToast, hiddenPostProductModal } from "../../store/reducers/modalReducer";
+import { activeToast, hiddenPostProductModal, hiddenUpdateProductModal } from "../../store/reducers/modalReducer";
 import axios from "axios";
 import { getProducts } from "../../store/thunks";
 
@@ -18,7 +18,7 @@ export type formValues = {
 
 let images: FileList
 
-const FormPostProduct = () => {
+const FormUpdateProduct = () => {
 
     const dispatch = useAppDispatch();
     const activeDrop = useState(false)
@@ -61,7 +61,7 @@ const FormPostProduct = () => {
 
     // hidden Modal Post Product
     const handleHiddenPostProductModal = () => {
-        dispatch(hiddenPostProductModal())
+        dispatch(hiddenUpdateProductModal())
     }
 
 
@@ -95,7 +95,7 @@ const FormPostProduct = () => {
     }
 
     useEffect(() => {
-        console.log("formPostProduct");
+        console.log("updateProduct");
         
         if (isSubmitted) {
             if (isSubmitSuccessful) {
@@ -269,4 +269,4 @@ const FormPostProduct = () => {
     )
 }
 
-export default FormPostProduct
+export default FormUpdateProduct

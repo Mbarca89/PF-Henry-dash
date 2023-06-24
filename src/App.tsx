@@ -16,12 +16,12 @@ import Buttons from './pages/UiElements/Buttons';
 import LoginForm from './pages/Form/LoginForm/LoginForm';
 import { RootState, useAppDispatch, useAppSelector } from './store';
 import { FcSalesPerformance } from 'react-icons/fc';
-import { setCurrentUser, setSession } from './store/reducers/userReducer';
+import { setCurrentUser, setSession } from './store/reducers/userReducer'
 
 
 function App() {
 
-
+  const toastModal = useAppSelector((state: RootState) => state.modals.toastModal)
   const [loading, setLoading] = useState<boolean>(true);
   const session = useAppSelector((state: RootState) => state.user.session)
   const dispatch = useAppDispatch()
@@ -49,6 +49,7 @@ function App() {
       dispatch(setCurrentUser(userData.data.user))
     }
     setTimeout(() => setLoading(false), 1000);
+
   }, [session]);
 
   return (

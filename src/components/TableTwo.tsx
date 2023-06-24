@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../store';
 import { getProducts } from '../store/thunks';
-import { activePostProductModal, clearStateToast } from '../store/reducers/modalReducer';
+import { activePostProductModal, activeUpdateProductModal, clearStateToast } from '../store/reducers/modalReducer';
 
 const TableTwo = () => {
   const products = useAppSelector((state: RootState) => state.user.products)
@@ -28,8 +28,22 @@ const TableTwo = () => {
     toastModal.isActive && dispatch(clearStateToast())
   }
 
-  const onUpdateProduct = () => {
-    dispatch(activePostProductModal());
+  const onUpdateProduct = (e: React.MouseEvent<HTMLElement>) => {
+  
+    console.log(e.currentTarget.innerHTML);
+    
+    
+    dispatch(activeUpdateProductModal({
+      isActive: true,
+      values: {
+        name: "benny",
+        categoria: "",
+        freeShipping:false,
+        description: "",
+        price:0,
+        stock:0
+      }
+    }));
   }
 
   useEffect(() => {

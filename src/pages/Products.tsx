@@ -1,6 +1,6 @@
 import Breadcrumb from '../components/Breadcrumb';
 import DecideAddOtherProductAbout from '../components/DecideAddOtherProductAbout';
-import { ModalPostOtherProduct, ModalPostProduct } from '../components/Modals';
+import { ModalUpdateProduct, ModalPostProduct } from '../components/Modals';
 import { Toaster, toast } from "react-hot-toast";
 import TableOne from '../components/TableOne';
 import TableThree from '../components/TableThree';
@@ -8,12 +8,13 @@ import TableTwo from '../components/TableTwo';
 import DefaultLayout from '../layout/DefaultLayout';
 import { RootState, useAppDispatch, useAppSelector } from '../store';
 import FormPostProduct from "./Form/FormPostProduct"
+import FormUpdateProduct from "./Form/FormUpdateProduct"
 import { useEffect } from 'react';
 import { clearStateToast } from '../store/reducers/modalReducer';
 
 const Products = () => {
   const postProductModalisActive = useAppSelector((state: RootState) => state.modals.postProductModalisActive)
-  const postAddOtherProductModalisActive = useAppSelector((state: RootState) => state.modals.postAddOtherProductModalisActive)
+  const updateProductModal = useAppSelector((state: RootState) => state.modals.updateProductModal)
   const toastModal = useAppSelector((state: RootState) => state.modals.toastModal)
   const dispatch = useAppDispatch()
 
@@ -55,6 +56,11 @@ const Products = () => {
       <div className={postProductModalisActive ? "block" : "hidden"}>
         <ModalPostProduct>
           <FormPostProduct />
+        </ModalPostProduct>
+      </div>
+      <div className={updateProductModal.isActive ? "block" : "hidden"}>
+        <ModalPostProduct>
+          <FormUpdateProduct />
         </ModalPostProduct>
       </div>
       {/* <div className={postAddOtherProductModalisActive ? "block" : "hidden"}>

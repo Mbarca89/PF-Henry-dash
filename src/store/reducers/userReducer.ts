@@ -58,7 +58,12 @@ export const counterSlice = createSlice({
       state.session = action.payload;
     },
     setCurrentUser: (state, action: PayloadAction<User>) => {
-      state.userData = action.payload
+      console.log(action.payload);
+      if(action.payload?.id){
+        console.log("entre");
+        
+        state.userData = action.payload
+      }
     }
   },
   extraReducers: (builder) => {

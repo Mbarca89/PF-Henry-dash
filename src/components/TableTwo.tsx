@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../store';
-import { getProducts } from '../store/thunks';
+import { getProductByID, getProducts } from '../store/thunks';
 import { activePostProductModal, activeUpdateProductModal, clearStateToast } from '../store/reducers/modalReducer';
+import { setCurrentProductID } from '../store/reducers/userReducer';
 
 const TableTwo = () => {
   const products = useAppSelector((state: RootState) => state.user.products)
@@ -21,34 +22,24 @@ const TableTwo = () => {
   }
 
   const handleActivePostProductModal = () => {
-    dispatch(activePostProductModal());
+    dispatch(activeUpdateProductModal({
+      isActive: true,
+    }));
   }
 
   const handleStateToast = () => {
     toastModal.isActive && dispatch(clearStateToast())
   }
 
-  const onUpdateProduct = (e: React.MouseEvent<HTMLElement>) => {
-  
-    console.log(e.currentTarget.innerHTML);
-    
-    
-    dispatch(activeUpdateProductModal({
-      isActive: true,
-      values: {
-        name: "benny",
-        categoria: "",
-        freeShipping:false,
-        description: "",
-        price:0,
-        stock:0
-      }
-    }));
+  const onUpdateProduct = (productID: string) => {
+    dispatch(getProductByID(productID))
+    dispatch(setCurrentProductID(productID))
+    handleActivePostProductModal()
   }
 
   useEffect(() => {
     console.log("products");
-    
+
     dispatch(getProducts(currentUser.id));
     setTimeout(() => setLoading(false), 1000);
   }, [currentUser])
@@ -92,6 +83,7 @@ const TableTwo = () => {
       </div>
       {
         products?.map(product => {
+
           return (
             <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5" key={crypto.randomUUID()}>
               <div className="col-span-3 flex items-center">
@@ -99,7 +91,9 @@ const TableTwo = () => {
                   <div className="h-12.5 w-15 rounded-md">
                     <img src={product?.photos[0]?.url} alt="Product" />
                   </div>
-                  <p className="text-sm text-black dark:text-white hover:underline hover:cursor-pointer" onClick={onUpdateProduct}>
+                  <p className="text-sm text-black dark:text-white hover:underline hover:cursor-pointer" onClick={() => {
+                    onUpdateProduct(product.id)
+                  }}>
                     {product.name}
                   </p>
                 </div>

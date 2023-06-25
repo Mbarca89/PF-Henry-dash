@@ -5,6 +5,7 @@ import { RootState, useAppDispatch, useAppSelector } from "../../store"
 import { activeToast, hiddenPostProductModal, hiddenUpdateProductModal } from "../../store/reducers/modalReducer";
 import axios from "axios";
 import { getProducts } from "../../store/thunks";
+import { clearCurrentProductID } from "../../store/reducers/userReducer";
 
 export type formValues = {
     name: string,
@@ -13,45 +14,54 @@ export type formValues = {
     description: string,
     price: number,
     stock: number,
-    photos: FormData
+    photos?: FormData | string[]
 }
 
 let images: FileList
 
 const FormUpdateProduct = () => {
+    const currentProductID = useAppSelector((state: RootState) => state.user.currentProductID)
+    const currentProductbyID = useAppSelector((state: RootState) => state.user.currentProductbyID)
+    console.log(currentProductID);
+    // const [aux, setaux] = useState(true)
+    // if(currentProductID){
+    //     setaux(!aux);
+    // }
 
     const dispatch = useAppDispatch();
     const activeDrop = useState(false)
 
     // products reducer
-    const products = useAppSelector((state: RootState) => state.user.products)
     const currentUser = useAppSelector((state: RootState) => state.user.userData)
+
+
+    // modal Update Product is active?
+    const updateProductModal = useAppSelector((state: RootState) => state.modals.updateProductModal)
 
     // control form Post Product
     const form = useForm<formValues>({
         // defaultValues: async () => {
-        //     if(isUpdate){
-        //         const response = await axios(`https://pf-henry-back-two.vercel.app/products/${currentUser.id}`);
-        //     const data = response.data;
-        //     return data
-        //     } else {
-        //         return {
+        //     if (currentProductID) {
+        //         console.log(currentProductID);
 
-        //         } 
-        //     }
-            
+        //         const response = await axios.get(`https://pf-henry-back-two.vercel.app/products/detail/${currentProductID}`)
+        //         console.log(response.data);
+
+        //         return response.data
+        //     } 
         // },
-        mode: "all"
+        mode: "all",
     });
+
+
     const { register, control, handleSubmit, formState, reset } = form;
     const { errors, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful } = formState;
-    const [currentPostProduct, setcurrentPostProduct] = useState<formValues>()
+    const [currentUpdatedProduct, setcurrentUpdatedProduct] = useState<formValues>()
 
     const onSubmit = (data: formValues) => {
-        console.log(data);
         // dispatch(hiddenPostProductModal())
         // setcurrentPostProduct(data)
-        setcurrentPostProduct({ ...data, photos: formData });
+        setcurrentUpdatedProduct({ ...data, photos: formData });
         // console.log(currentPostProduct);
     }
 
@@ -62,6 +72,7 @@ const FormUpdateProduct = () => {
     // hidden Modal Post Product
     const handleHiddenPostProductModal = () => {
         dispatch(hiddenUpdateProductModal())
+        dispatch(clearCurrentProductID())
     }
 
 
@@ -77,32 +88,34 @@ const FormUpdateProduct = () => {
     };
 
 
-    // Post product
-    const postProduct = async (data: formValues) => {
+    // Update product
+    const uploadUpdatedProduct = async (data: formValues) => {
         let formData = new FormData();
+        console.log({ data });
 
-        formData.append('data', JSON.stringify(currentPostProduct))
+        formData.append('data', JSON.stringify(currentUpdatedProduct))
         console.log(images)
         for (let i = 0; i < images.length; i++) {
             formData.append('photos', images[i])
         }
 
-
-        return await axios.post(
+        return await axios.put(
             'https://pf-henry-back-two.vercel.app/products/post',
             formData
         );
     }
 
     useEffect(() => {
-        console.log("updateProduct");
+        console.log({ defaultvalues: formState.defaultValues })
+        console.log({currentProductbyID});
         
+
         if (isSubmitted) {
             if (isSubmitSuccessful) {
 
                 dispatch(hiddenPostProductModal())
 
-                postProduct(currentPostProduct as formValues).then(response => {
+                uploadUpdatedProduct(currentUpdatedProduct as formValues).then(response => {
                     console.log(response);
 
                     dispatch(activeToast({
@@ -111,7 +124,7 @@ const FormUpdateProduct = () => {
                     }))
                     dispatch(getProducts(currentUser.id))
                 }).catch(error => {
-                    console.log(error);
+                    console.log(error.response);
 
                     dispatch(activeToast({
                         isOk: false,
@@ -121,9 +134,9 @@ const FormUpdateProduct = () => {
                 reset()
             }
         }
+        reset(currentProductbyID)
 
-    }, [isSubmitSuccessful, reset])
-
+    }, [isSubmitSuccessful, reset, currentProductbyID])
 
     return (
         <div>
@@ -260,7 +273,7 @@ const FormUpdateProduct = () => {
 
                 <div className="flex items-center justify-end gap-x-4">
                     <button type="button" onClick={handleHiddenPostProductModal} className="text-sm font-semibold  text-gray-900 px-3 py-2 rounded-md bg-meta-7 text-white">Cancel</button>
-                    <button type="submit" disabled={!isDirty || !isValid || isSubmitting} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting) ? "bg-bodydark" : "bg-primary"}`}>Save</button>
+                    <button type="submit" disabled={!isDirty || !isValid || isSubmitting} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting) ? "bg-bodydark" : "bg-meta-3"}`}>Update</button>
                 </div>
             </form>
             <DevTool control={control} />

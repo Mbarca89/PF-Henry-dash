@@ -205,7 +205,7 @@ const LoginAndRegisterForm = () => {
                         message: `Ocurrio un problema. ${error?.response?.data}`
                     }))
                 })
-                // registerReset()
+                registerReset()
             }
         }
         // Submit Register Form

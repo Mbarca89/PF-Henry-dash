@@ -31,3 +31,22 @@ export const getProducts = createAsyncThunk(
     return response.data;
   }
 );
+
+export const getProductByID = createAsyncThunk(
+  'productByID/get',
+  async (productID: string, thunkApi) => {
+    // const response = await axios.post(
+    //   'https://pf-henry-back-two.vercel.app/products?page=2',
+    //   {
+    //     price: { isSorted: true, order: 'desc' },
+    //     relevant: { isSorted: false, order: 'asc' },
+    //   }
+    // );
+    
+    const response = await axios.get(
+      `https://pf-henry-back-two.vercel.app/products/detail/${productID}`
+    );
+      
+    return response.data;
+  }
+);

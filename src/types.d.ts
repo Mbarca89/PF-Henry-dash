@@ -24,9 +24,13 @@ export interface Products {
     hasDiscount:  boolean;
     discount:     number;
     photos:       Photo[];
+    category:     string;
     freeShipping: boolean;
     sales:        number;
     rating:       number;
+    reviews:      any[];
+    seller:       string;
+    isActive:     boolean;
     id:           string;
 }
 

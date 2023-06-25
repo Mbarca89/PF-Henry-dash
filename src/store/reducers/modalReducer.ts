@@ -2,28 +2,28 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'react-hot-toast';
 
 export type valuesUpdateProduct = {
-  name: string,
-  categoria: string,
-  freeShipping:boolean,
-  description:string,
-  price:number,
-  stock:number
-}
+  name: string;
+  category: string;
+  freeShipping: boolean;
+  description: string;
+  price: number;
+  stock: number;
+};
 
 export interface modelState {
   postProductModalisActive: boolean;
   updateProductModal: {
-    isActive: boolean,
-    values: valuesUpdateProduct
+    isActive: boolean;
+    values: valuesUpdateProduct;
   };
   valuesPostModalProducts: {
-    name?: string,
-    category?: string,
-    freeShipping?: boolean,
-    description?: string,
-    price?: number,
-    stock?: number,
-}
+    name?: string;
+    category?: string;
+    freeShipping?: boolean;
+    description?: string;
+    price?: number;
+    stock?: number;
+  };
   toastModal: {
     isActive: boolean;
     message: string;
@@ -36,19 +36,19 @@ const initialState: modelState = {
   updateProductModal: {
     isActive: false,
     values: {
-      name: "",
-      categoria: "",
-      freeShipping:false,
-      description: "",
-      price:0,
-      stock:0
-    }
+      name: '',
+      category: '',
+      freeShipping: false,
+      description: '',
+      price: 0,
+      stock: 0,
+    },
   },
   valuesPostModalProducts: {
-    name: "",
-    category:"",
-    freeShipping:false,
-    description:'',
+    name: '',
+    category: '',
+    freeShipping: false,
+    description: '',
     price: 0,
     stock: 1,
   },
@@ -69,14 +69,25 @@ export const modalSlice = createSlice({
     hiddenPostProductModal: (state) => {
       state.postProductModalisActive = false;
     },
-    activeUpdateProductModal: (state, action: PayloadAction<{ isActive: boolean; values?: valuesUpdateProduct }>) => {
+    activeUpdateProductModal: (
+      state,
+      action: PayloadAction<{ isActive: boolean; values?: valuesUpdateProduct }>
+    ) => {
       state.updateProductModal.isActive = action.payload.isActive;
-      if(action.payload.values){
+      if (action.payload.values) {
         state.updateProductModal.values = action.payload?.values;
       }
     },
     hiddenUpdateProductModal: (state) => {
       state.updateProductModal.isActive = false;
+      state.updateProductModal.values = {
+        name: '',
+        category: '',
+        freeShipping: false,
+        description: '',
+        price: 0,
+        stock: 0,
+      };
     },
     activeToast: (
       state,

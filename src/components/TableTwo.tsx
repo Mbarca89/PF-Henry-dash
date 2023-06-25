@@ -21,24 +21,31 @@ const TableTwo = () => {
     }, 2000);
   }
 
+  // const handleActivePostProductModal = () => {
+  //   dispatch(activeUpdateProductModal({
+  //     isActive: true,
+  //   }));
+  // }
+
   const handleActivePostProductModal = () => {
+    dispatch(activePostProductModal())
+  };
+
+
+  // const handleStateToast = () => {
+  //   toastModal.isActive && dispatch(clearStateToast())
+  // }
+
+  const onUpdateProduct = (productID: string) => {
+    dispatch(getProductByID(productID))
+    dispatch(setCurrentProductID(productID))
     dispatch(activeUpdateProductModal({
       isActive: true,
     }));
   }
 
-  const handleStateToast = () => {
-    toastModal.isActive && dispatch(clearStateToast())
-  }
-
-  const onUpdateProduct = (productID: string) => {
-    dispatch(getProductByID(productID))
-    dispatch(setCurrentProductID(productID))
-    handleActivePostProductModal()
-  }
-
   useEffect(() => {
-    console.log("products");
+    // console.log("products");
 
     dispatch(getProducts(currentUser.id));
     setTimeout(() => setLoading(false), 1000);
@@ -60,7 +67,7 @@ const TableTwo = () => {
         onClick={handleActivePostProductModal}
         className="absolute cursor-pointer right-2 top-2 rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
       >
-        <button onClick={handleStateToast}>
+        <button>
           Add Product
         </button>
       </div>

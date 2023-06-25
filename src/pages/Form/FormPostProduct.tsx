@@ -95,7 +95,7 @@ const FormPostProduct = () => {
     }
 
     useEffect(() => {
-        console.log("formPostProduct");
+        // console.log("formPostProduct");
         
         if (isSubmitted) {
             if (isSubmitSuccessful) {

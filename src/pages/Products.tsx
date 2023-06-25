@@ -19,7 +19,7 @@ const Products = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    console.log("products");
+    // console.log("products");
     
     if (toastModal.isActive) {
       if (toastModal.type == "success") {

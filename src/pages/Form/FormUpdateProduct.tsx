@@ -6,23 +6,29 @@ import { activeToast, hiddenPostProductModal, hiddenUpdateProductModal } from ".
 import axios from "axios";
 import { getProducts } from "../../store/thunks";
 import { clearCurrentProductID } from "../../store/reducers/userReducer";
+import { Products } from "../../types";
 
-export type formValues = {
-    name: string,
-    category?: string,
-    freeShipping: boolean,
-    description: string,
-    price: number,
-    stock: number,
-    photos?: FormData | string[]
-}
+// export type formValues = {
+//     name: string,
+//     category?: string,
+//     freeShipping: boolean,
+//     description: string,
+//     price: number,
+//     stock: number,
+//     photos?: [[
+//         {
+//             url: '',
+//             public_id: '',
+//         },
+//     ],]
+// }
 
 let images: FileList
 
 const FormUpdateProduct = () => {
     const currentProductID = useAppSelector((state: RootState) => state.user.currentProductID)
     const currentProductbyID = useAppSelector((state: RootState) => state.user.currentProductbyID)
-    console.log(currentProductID);
+    // console.log(currentProductID);
     // const [aux, setaux] = useState(true)
     // if(currentProductID){
     //     setaux(!aux);
@@ -39,7 +45,7 @@ const FormUpdateProduct = () => {
     const updateProductModal = useAppSelector((state: RootState) => state.modals.updateProductModal)
 
     // control form Post Product
-    const form = useForm<formValues>({
+    const form = useForm<Products>({
         // defaultValues: async () => {
         //     if (currentProductID) {
         //         console.log(currentProductID);
@@ -56,17 +62,19 @@ const FormUpdateProduct = () => {
 
     const { register, control, handleSubmit, formState, reset } = form;
     const { errors, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful } = formState;
-    const [currentUpdatedProduct, setcurrentUpdatedProduct] = useState<formValues>()
+    const [currentUpdatedProduct, setcurrentUpdatedProduct] = useState<Products>()
 
-    const onSubmit = (data: formValues) => {
+    const onSubmit = (data: Products) => {
         // dispatch(hiddenPostProductModal())
         // setcurrentPostProduct(data)
-        setcurrentUpdatedProduct({ ...data, photos: formData });
+        console.log({Set: data});
+        
+        setcurrentUpdatedProduct(data);
         // console.log(currentPostProduct);
     }
 
-    const onError = (errors: FieldErrors<formValues>) => {
-        console.log(errors);
+    const onError = (errors: FieldErrors<Products>) => {
+        console.log({errors});
     }
 
     // hidden Modal Post Product
@@ -89,42 +97,48 @@ const FormUpdateProduct = () => {
 
 
     // Update product
-    const uploadUpdatedProduct = async (data: formValues) => {
-        let formData = new FormData();
-        console.log({ data });
+    const uploadUpdatedProduct = async (data: Products) => {
+        // let formData = new FormData();
+        console.log({ currentUpdatedProduct2: currentProductbyID });
 
-        formData.append('data', JSON.stringify(currentUpdatedProduct))
-        console.log(images)
-        for (let i = 0; i < images.length; i++) {
-            formData.append('photos', images[i])
-        }
+        // console.log(currentUpdatedProduct?.photos[0]);
+
+        // console.log({ data, photos: currentUpdatedProduct?.photos[0] });
+        // console.log(data.photos);
+
+        // formData.append('data', JSON.stringify(currentUpdatedProduct))
+        // console.log(images)
+        // if (images.length) {
+        //     for (let i = 0; i < images.length; i++) {
+        //         formData.append('photos', images[i])
+        //     }
+        // }
 
         return await axios.put(
-            'https://pf-henry-back-two.vercel.app/products/post',
-            formData
+            'https://pf-henry-back-two.vercel.app/products/',
+            currentUpdatedProduct
         );
     }
 
     useEffect(() => {
-        console.log({ defaultvalues: formState.defaultValues })
-        console.log({currentProductbyID});
-        
-
         if (isSubmitted) {
             if (isSubmitSuccessful) {
 
-                dispatch(hiddenPostProductModal())
+                dispatch(hiddenUpdateProductModal())
 
-                uploadUpdatedProduct(currentUpdatedProduct as formValues).then(response => {
+                console.log({ defaultvalues: formState.defaultValues })
+                console.log({ currentProductbyID });
+
+                uploadUpdatedProduct(currentUpdatedProduct as Products).then(response => {
                     console.log(response);
 
                     dispatch(activeToast({
                         isOk: true,
-                        message: `El producto ${response?.data?.name} fue creado exitosamente`
+                        message: `El producto ${response?.data?.name} fue actualizado exitosamente`
                     }))
                     dispatch(getProducts(currentUser.id))
                 }).catch(error => {
-                    console.log(error.response);
+                    console.log(error);
 
                     dispatch(activeToast({
                         isOk: false,
@@ -273,7 +287,10 @@ const FormUpdateProduct = () => {
 
                 <div className="flex items-center justify-end gap-x-4">
                     <button type="button" onClick={handleHiddenPostProductModal} className="text-sm font-semibold  text-gray-900 px-3 py-2 rounded-md bg-meta-7 text-white">Cancel</button>
-                    <button type="submit" disabled={!isDirty || !isValid || isSubmitting} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting) ? "bg-bodydark" : "bg-meta-3"}`}>Update</button>
+                    <button type="submit" onClick={() => {
+                        console.log("presiono aqui");
+
+                    }} disabled={!isDirty || !isValid || isSubmitting} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting) ? "bg-bodydark" : "bg-meta-3"}`}>Update</button>
                 </div>
             </form>
             <DevTool control={control} />

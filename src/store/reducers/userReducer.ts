@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Products, User } from '../../types';
-import { getProductByID, getProducts, getUser } from '../thunks';
+import { getProductByID, getProducts, getUser, logicDeleteProductByID } from '../thunks';
 import { formValues } from '../../pages/Form/FormPostProduct';
 import { boolean } from 'zod';
 
@@ -110,6 +110,10 @@ export const counterSlice = createSlice({
 
     builder.addCase(getProductByID.fulfilled, (state, action) => {
       state.currentProductbyID = action.payload;
+    });
+
+    builder.addCase(logicDeleteProductByID.fulfilled, (state, action) => {
+      state.products = state.products;
     });
 
     // builder.addCase(postProduct.fulfilled, (state, action: PayloadAction<formValues>) => {

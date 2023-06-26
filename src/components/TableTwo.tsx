@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../store';
-import { getProductByID, getProducts } from '../store/thunks';
+import { getProductByID, getProducts, logicDeleteProductByID } from '../store/thunks';
 import { activePostProductModal, activeUpdateProductModal, clearStateToast } from '../store/reducers/modalReducer';
 import { setCurrentProductID } from '../store/reducers/userReducer';
+import { BsFillTrashFill } from "react-icons/bs"
 
 const TableTwo = () => {
   const products = useAppSelector((state: RootState) => state.user.products)
@@ -32,9 +33,9 @@ const TableTwo = () => {
   };
 
 
-  // const handleStateToast = () => {
-  //   toastModal.isActive && dispatch(clearStateToast())
-  // }
+  const handleStateToast = () => {
+    toastModal.isActive && dispatch(clearStateToast())
+  }
 
   const onUpdateProduct = (productID: string) => {
     dispatch(getProductByID(productID))
@@ -44,12 +45,19 @@ const TableTwo = () => {
     }));
   }
 
+  const handleDeleteProduct = (productID: string) => {
+    console.log();
+    
+    dispatch(logicDeleteProductByID(productID))
+  }
+
   useEffect(() => {
     // console.log("products");
-
+    console.log("aaa");
+    
     dispatch(getProducts(currentUser.id));
     setTimeout(() => setLoading(false), 1000);
-  }, [currentUser])
+  }, [currentUser, products.length])
 
 
   return loading ? (
@@ -67,12 +75,12 @@ const TableTwo = () => {
         onClick={handleActivePostProductModal}
         className="absolute cursor-pointer right-2 top-2 rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
       >
-        <button>
+        <button onClick={handleStateToast}>
           Add Product
         </button>
       </div>
       <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-        <div className="col-span-3 flex items-center">
+        <div className="col-span-2 flex items-center">
           <p className="font-medium">Product Name</p>
         </div>
         <div className="col-span-2 hidden items-center sm:flex">
@@ -87,6 +95,9 @@ const TableTwo = () => {
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Stock</p>
         </div>
+        {/* <div className="col-span-1 flex items-center">
+          <p className="font-medium">Delete</p>
+        </div> */}
       </div>
       {
         products?.map(product => {
@@ -105,7 +116,7 @@ const TableTwo = () => {
                   </p>
                 </div>
               </div>
-              <div className="col-span-2 hidden items-center sm:flex">
+              <div className="col-span-1 hidden items-center sm:flex">
                 <p className="text-sm text-black dark:text-white">{product.description}</p>
               </div>
               <div className="col-span-1 flex items-center">
@@ -116,6 +127,11 @@ const TableTwo = () => {
               </div>
               <div className="col-span-1 flex items-center">
                 <p className="text-sm text-meta-3">{product.stock}</p>
+              </div>
+              <div className="col-span-1 flex items-center" >
+                <p className="text-xl text-danger cursor-pointer" onClick={() => {
+                  handleDeleteProduct(product.id)
+                }}><BsFillTrashFill /></p>
               </div>
             </div>
           )

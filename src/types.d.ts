@@ -32,6 +32,7 @@ export interface Products {
     seller:       string;
     isActive:     boolean;
     id:           string;
+    ratingAverage: number;
 }
 
 
@@ -41,3 +42,13 @@ export interface Photo {
 }
 //
 
+
+export interface Categorie {
+    categoryName: string;
+    products:     Product[];
+    id:           string;
+}
+
+export interface Product {
+    _id: string;
+}

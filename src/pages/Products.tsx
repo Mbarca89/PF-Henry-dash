@@ -11,16 +11,18 @@ import FormPostProduct from "./Form/FormPostProduct"
 import FormUpdateProduct from "./Form/FormUpdateProduct"
 import { useEffect } from 'react';
 import { clearStateToast } from '../store/reducers/modalReducer';
+import { getProducts } from '../store/thunks';
 
 const Products = () => {
   const postProductModalisActive = useAppSelector((state: RootState) => state.modals.postProductModalisActive)
   const updateProductModal = useAppSelector((state: RootState) => state.modals.updateProductModal)
   const toastModal = useAppSelector((state: RootState) => state.modals.toastModal)
+  const currentUser = useAppSelector((state: RootState) => state.user.userData)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     // console.log("products");
-    
+    dispatch(getProducts(currentUser.id))
     if (toastModal.isActive) {
       if (toastModal.type == "success") {
         console.log("success");

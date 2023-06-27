@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../store';
-import { getProductByID, getProducts, logicDeleteProductByID } from '../store/thunks';
+import { getAllCategories, getProductByID, getProducts, logicDeleteProductByID } from '../store/thunks';
 import { activePostProductModal, activeUpdateProductModal, clearStateToast } from '../store/reducers/modalReducer';
 import { setCurrentProductID } from '../store/reducers/userReducer';
-import { BsFillTrashFill } from "react-icons/bs"
+import { BsFillFileArrowDownFill, BsFillFileArrowUpFill, BsFillTrashFill } from "react-icons/bs"
+import { Products } from '../types';
 
 const TableTwo = () => {
   const products = useAppSelector((state: RootState) => state.user.products)
   const toastModal = useAppSelector((state: RootState) => state.modals.toastModal)
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state: RootState) => state.user.userData)
+
+  const [aux, setaux] = useState(false)
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -45,20 +48,20 @@ const TableTwo = () => {
     }));
   }
 
-  const handleDeleteProduct = (productID: string) => {
+  const handleDeleteProduct = (product: Products) => {
     console.log();
-    
-    dispatch(logicDeleteProductByID(productID))
+
+    dispatch(logicDeleteProductByID(product))
+    setaux(!aux)
   }
 
   useEffect(() => {
     // console.log("products");
-    console.log("aaa");
-    
     dispatch(getProducts(currentUser.id));
+    dispatch(getAllCategories())
     setTimeout(() => setLoading(false), 1000);
-  }, [currentUser, products.length])
-
+    setTimeout(() => dispatch(getProducts(currentUser.id)), 100);
+  }, [currentUser, aux])
 
   return loading ? (
     <div
@@ -109,29 +112,80 @@ const TableTwo = () => {
                   <div className="h-12.5 w-15 rounded-md">
                     <img src={product?.photos[0]?.url} alt="Product" />
                   </div>
-                  <p className="text-sm text-black dark:text-white hover:underline hover:cursor-pointer" onClick={() => {
-                    onUpdateProduct(product.id)
-                  }}>
-                    {product.name}
-                  </p>
+                  {
+                    product.isActive ? (
+                      <p className="text-sm text-black dark:text-white hover:underline hover:cursor-pointer" onClick={() => {
+                        onUpdateProduct(product.id)
+                      }}>
+                        {product.name}
+                      </p>
+                    ) : (
+                      <p>
+                        {product.name}
+                      </p>
+                    )
+                  }
                 </div>
               </div>
               <div className="col-span-1 hidden items-center sm:flex">
-                <p className="text-sm text-black dark:text-white">{product.description}</p>
+                {
+                  product.isActive ? (
+                    <p className="text-sm text-black dark:text-white">{product.description}</p>
+                  ) : (
+                    <p>
+                      {product.description}
+                    </p>
+                  )
+                }
+
               </div>
               <div className="col-span-1 flex items-center">
-                <p className="text-sm text-black dark:text-white">${product.price}</p>
+                {
+                  product.isActive ? (
+                    <p className="text-sm text-black dark:text-white">{product.price}</p>
+                  ) : (
+                    <p>
+                      ${product.price}
+                    </p>
+                  )
+                }
               </div>
               <div className="col-span-1 flex items-center">
-                <p className="text-sm text-black dark:text-white">{product.rating}</p>
+                {
+                  product.isActive ? (
+                    <p className="text-sm text-black dark:text-white">{product.rating}</p>
+                  ) : (
+                    <p>
+                      {product.rating}
+                    </p>
+                  )
+                }
               </div>
               <div className="col-span-1 flex items-center">
-                <p className="text-sm text-meta-3">{product.stock}</p>
+                {
+                  product.isActive ? (
+                    <p className="text-sm text-meta-3">{product.stock}</p>
+                  ) : (
+                    <p>
+                      {product.stock}
+                    </p>
+                  )
+                }
+
               </div>
               <div className="col-span-1 flex items-center" >
-                <p className="text-xl text-danger cursor-pointer" onClick={() => {
-                  handleDeleteProduct(product.id)
-                }}><BsFillTrashFill /></p>
+                {
+                  product.isActive ? (
+                    <p className="text-xl text-danger cursor-pointer" onClick={() => {
+                      handleDeleteProduct(product)
+                    }}><BsFillFileArrowDownFill /></p>
+                  ) : (
+                    <p className="text-xl text-meta-3 cursor-pointer" onClick={() => {
+                      handleDeleteProduct(product)
+                    }}><BsFillFileArrowUpFill /></p>
+                  )
+                }
+
               </div>
             </div>
           )

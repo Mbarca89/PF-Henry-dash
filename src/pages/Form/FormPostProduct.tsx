@@ -5,6 +5,7 @@ import { RootState, useAppDispatch, useAppSelector } from "../../store"
 import { activeToast, hiddenPostProductModal } from "../../store/reducers/modalReducer";
 import axios from "axios";
 import { getProducts } from "../../store/thunks";
+import { Categorie } from "../../types";
 
 export type formValues = {
     name: string,
@@ -26,6 +27,7 @@ const FormPostProduct = () => {
     // products reducer
     const products = useAppSelector((state: RootState) => state.user.products)
     const currentUser = useAppSelector((state: RootState) => state.user.userData)
+    const categories = useAppSelector((state: RootState) => state.user.categories)
 
     // control form Post Product
     const form = useForm<formValues>({
@@ -39,7 +41,7 @@ const FormPostProduct = () => {
 
         //         } 
         //     }
-            
+
         // },
         mode: "all"
     });
@@ -81,22 +83,23 @@ const FormPostProduct = () => {
     const postProduct = async (data: formValues) => {
         let formData = new FormData();
 
-        formData.append('data', JSON.stringify(currentPostProduct))
+        formData.append('data', JSON.stringify({ ...currentPostProduct, userId: currentUser.id }))
         console.log(images)
         for (let i = 0; i < images.length; i++) {
             formData.append('photos', images[i])
         }
+        // https://pf-henry-back-two.vercel.app/products/post
 
 
         return await axios.post(
-            'https://pf-henry-back-two.vercel.app/products/post',
+            'http://185.253.153.34:3001/products/post',
             formData
         );
     }
 
     useEffect(() => {
         // console.log("formPostProduct");
-        
+
         if (isSubmitted) {
             if (isSubmitSuccessful) {
 
@@ -109,7 +112,9 @@ const FormPostProduct = () => {
                         isOk: true,
                         message: `El producto ${response?.data?.name} fue creado exitosamente`
                     }))
-                    dispatch(getProducts(currentUser.id))
+                    setTimeout(() => {
+                        dispatch(getProducts(currentUser.id))
+                    }, 100);
                 }).catch(error => {
                     console.log(error);
 
@@ -173,9 +178,13 @@ const FormPostProduct = () => {
                             <div className="sm:col-span-4">
                                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Categoria</label>
                                 <div className="mt-2">
-                                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                        <input type="text" {...register("category")} id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full" placeholder="categoria" />
-                                    </div>
+                                    <select {...register("category")}>
+                                        {
+                                            categories.map((category: Categorie) => {
+                                                return <option key={category.id} value={category.id}>{category.categoryName}</option>
+                                            })
+                                        }
+                                    </select>
                                 </div>
                             </div>
                             <div className="sm:col-span-2 flex row-span-1 justify-center items-center">

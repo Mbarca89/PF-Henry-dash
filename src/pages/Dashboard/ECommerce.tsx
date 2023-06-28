@@ -6,7 +6,7 @@ import ChartOne from '../../components/ChartOne';
 import ChartThree from '../../components/ChartThree';
 import ChartTwo from '../../components/ChartTwo';
 import ChatCard from '../../components/ChatCard';
-import MapOne from '../../components/MapOne';
+// import MapOne from '../../components/MapOne';
 import TableOne from '../../components/TableOne';
 import DefaultLayout from '../../layout/DefaultLayout';
 
@@ -41,7 +41,7 @@ const ECommerce = () => {
         <ChartOne />
         <ChartTwo />
         <ChartThree />
-        <MapOne />
+        {/* <MapOne /> */}
         <div className="col-span-12 xl:col-span-8">
           <TableOne />
         </div>

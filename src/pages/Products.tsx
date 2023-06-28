@@ -11,7 +11,8 @@ import FormPostProduct from "./Form/FormPostProduct"
 import FormUpdateProduct from "./Form/FormUpdateProduct"
 import { useEffect } from 'react';
 import { clearStateToast } from '../store/reducers/modalReducer';
-import { getProducts } from '../store/thunks';
+import { getProducts, getAllProducts } from '../store/thunks';
+import TableFive from '../components/TableFive';
 
 const Products = () => {
   const postProductModalisActive = useAppSelector((state: RootState) => state.modals.postProductModalisActive)
@@ -22,26 +23,51 @@ const Products = () => {
 
   useEffect(() => {
     // console.log("products");
-    dispatch(getProducts(currentUser.id))
-    if (toastModal.isActive) {
-      if (toastModal.type == "success") {
-        console.log("success");
-
-        toast.success(toastModal.message, {
-          duration: 4000,
-        });
-
-        setTimeout(() => {
-          dispatch(clearStateToast())
-        }, 10000);
-      } else {
-        console.log("errpr");
-        toast.error(toastModal.message, {
-          duration: 6000,
-        });
-        setTimeout(() => {
-          dispatch(clearStateToast())
-        }, 10000);
+    if(currentUser.role === 'admin'){
+      dispatch(getAllProducts())
+      if (toastModal.isActive) {
+        if (toastModal.type == "success") {
+          console.log("success");
+  
+          toast.success(toastModal.message, {
+            duration: 4000,
+          });
+  
+          setTimeout(() => {
+            dispatch(clearStateToast())
+          }, 10000);
+        } else {
+          console.log("errpr");
+          toast.error(toastModal.message, {
+            duration: 6000,
+          });
+          setTimeout(() => {
+            dispatch(clearStateToast())
+          }, 10000);
+        }
+      }
+    } else {
+      dispatch(getProducts(currentUser.id))
+      if (toastModal.isActive) {
+        if (toastModal.type == "success") {
+          console.log("success");
+  
+          toast.success(toastModal.message, {
+            duration: 4000,
+          });
+  
+          setTimeout(() => {
+            dispatch(clearStateToast())
+          }, 10000);
+        } else {
+          console.log("errpr");
+          toast.error(toastModal.message, {
+            duration: 6000,
+          });
+          setTimeout(() => {
+            dispatch(clearStateToast())
+          }, 10000);
+        }
       }
     }
   }, [toastModal.isActive])
@@ -73,7 +99,7 @@ const Products = () => {
       <DefaultLayout>
         <Breadcrumb pageName="Products" />
         <div className="flex flex-col gap-10 relative">
-          <TableTwo />
+          {currentUser.role === 'seller' ? <TableTwo /> : <TableFive/>}
           {/* <TableOne />
           <TableThree /> */}
         </div>

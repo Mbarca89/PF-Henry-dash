@@ -13,7 +13,11 @@ export interface User {
     purchasedProducts?: any[];
     cart:              string;
     id:                string;
+    active:            boolean
 }
+
+//Users
+export interface Users extends Array<User> {}
 
 //Products
 export interface Products {
@@ -29,7 +33,7 @@ export interface Products {
     sales:        number;
     rating:       number;
     reviews:      any[];
-    seller:       string;
+    seller:       {id:string, name:string};
     isActive:     boolean;
     id:           string;
     ratingAverage: number;

@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { Products } from '../types';
+import { Products, User } from '../types';
 
 export const getUser = createAsyncThunk('user/get', async (thunkApi) => {
   const response = await axios.get(
     'https://pf-henry-back-two.vercel.app/users'
   );
 
-  console.log({responseGetProducts: response});
+  console.log({ responseGetProducts: response });
 
   const data = response.data[1];
   return data;
@@ -28,6 +28,17 @@ export const getProducts = createAsyncThunk(
       `https://pf-henry-back-two.vercel.app/products/${userID}`
     );
 
+    return response.data;
+  }
+);
+
+export const getAllProducts = createAsyncThunk(
+  'allProducts/get',
+  async (thunkApi) => {
+   
+    const response = await axios.get(
+      `http://localhost:3001/products/all`
+    );
     return response.data;
   }
 );
@@ -87,8 +98,30 @@ export const getAllCategories = createAsyncThunk(
     const response = await axios.get(
       `http://localhost:3001/categories`,
     );
-      console.log(response.data);
-      
+    return response.data;
+  }
+);
+
+export const getUsers = createAsyncThunk('users/get', async (thunkApi) => {
+  const response = await axios.get(
+    'https://pf-henry-back-two.vercel.app/users'
+  );
+
+  console.log({ responseGetProducts: response });
+
+  const data = response.data
+  return data;
+});
+
+export const changeUserActivation = createAsyncThunk(
+  'users/update',
+  async (user: User, thunkApi) => {
+    const response = await axios.put(
+      `http://localhost:3001/users/changeactivation/${user.id}`,
+      {
+        active: user.active ? false : true
+      }
+    );
     return response.data;
   }
 );

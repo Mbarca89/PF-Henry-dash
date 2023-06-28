@@ -144,7 +144,7 @@ const LoginAndRegisterForm = () => {
             if (loginIsSubmitSuccesfull) {
                 loginUser(currentLoginFormData as LoginFormValues).then(response => {
                     // SI TODO SALE BIEN 
-                    if (response.data.user.role === "seller") {
+                    if (response.data.user.role === "seller" || response.data.user.role === "admin") {
                         dispatch(setSession(true))
                         dispatch(setCurrentUser(response.data.user))
                         setLoading(true)

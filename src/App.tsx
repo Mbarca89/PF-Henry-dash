@@ -11,6 +11,7 @@ import FormLayout from './pages/Form/FormLayout';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Products from './pages/Products';
+import Users from './pages/Users';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import LoginForm from './pages/Form/LoginForm/LoginForm';
@@ -66,6 +67,7 @@ function App() {
             <Route path="/forms/form-elements" element={<FormElements />} />
             <Route path="/forms/form-layout" element={<FormLayout />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/users" element={<Users />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/chart" element={<Chart />} />
             <Route path="/ui/alerts" element={<Alerts />} />
@@ -88,6 +90,7 @@ function App() {
             <Route path="/forms/form-elements" element={<FormElements />} />
             <Route path="/forms/form-layout" element={<FormLayout />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/users" element={<Users />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/chart" element={<Chart />} />
             <Route path="/ui/alerts" element={<Alerts />} />

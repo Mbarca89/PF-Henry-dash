@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Categorie, Products, User } from '../../types';
-import { getAllCategories, getProductByID, getProducts, getUser, logicDeleteProductByID } from '../thunks';
+import { Categorie, Products, User, Users } from '../../types';
+import { getAllCategories, getProductByID, getProducts, getUser, logicDeleteProductByID, getUsers, getAllProducts } from '../thunks';
 
 type userState = {
   userData: User;
   products: Products[];
+  users: Users;
   session: boolean;
   currentProductbyID: Products;
   currentProductID: string
@@ -27,6 +28,7 @@ const initialState: userState = {
     role: '',
     cart: '',
     id: '',
+    active: false
   },
   products: [
     {
@@ -47,12 +49,13 @@ const initialState: userState = {
       sales: 0,
       rating: 0,
       reviews: [],
-      seller: '',
+      seller: {id:'',name:''},
       isActive: true,
       id: '',
       ratingAverage: 0
     },
   ],
+  users:[],
   session: false,
   currentProductbyID: {
     name: '',
@@ -72,7 +75,7 @@ const initialState: userState = {
     sales: 0,
     rating: 0,
     reviews: [],
-    seller: '',
+    seller: {id:'',name:''},
     isActive: true,
     id: '',
     ratingAverage: 0
@@ -106,7 +109,15 @@ export const counterSlice = createSlice({
       state.userData = action.payload;
     });
 
+    builder.addCase(getUsers.fulfilled, (state, action) => {
+      state.users = action.payload;
+    });
+
     builder.addCase(getProducts.fulfilled, (state, action) => {
+      state.products = action.payload;
+    });
+
+    builder.addCase(getAllProducts.fulfilled, (state, action) => {
       state.products = action.payload;
     });
 

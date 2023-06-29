@@ -64,10 +64,10 @@ const TableFour = () => {
         </div>
       </div>
       {
-        users?.map((user: User) => {
+        users?.map((user:User) => {
 
           return (
-            <div className="grid justify-items-center grid-cols-4 md:grid-cols-6  border-t border-stroke py-4.5 px-4 dark:border-strokedark  md:px-6 2xl:px-7.5 " key={crypto.randomUUID()}>
+            <div className="grid justify-items-center grid-cols-4 md:grid-cols-6  border-t border-stroke py-4.5 px-4 dark:border-strokedark  md:px-6 2xl:px-7.5 "  key={crypto.randomUUID()}>
               <div className="col-span-1 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   {
@@ -109,7 +109,7 @@ const TableFour = () => {
               <div className="col-span-1 flex items-center" >
                 {
                   user.active ? (
-
+                    
                     <p className="text-sm text-meta-3" >Activo</p>
                   ) : (
                     <p className="text-sm text-danger" >Inactivo</p>
@@ -120,7 +120,7 @@ const TableFour = () => {
               <div className="col-span-1 flex items-center" >
                 {
                   user.active ? (
-
+                    
                     <p className="text-sm text-danger cursor-pointer" onClick={() => changeUserStatus(user)}><BsFillFileArrowDownFill /></p>
                   ) : (
                     <p className="text-sm text-meta-3 cursor-pointer" onClick={() => changeUserStatus(user)}><BsFillFileArrowUpFill /></p>

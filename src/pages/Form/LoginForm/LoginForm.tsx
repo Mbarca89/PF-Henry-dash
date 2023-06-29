@@ -8,6 +8,7 @@ import { activeToast, clearStateToast } from "../../../store/reducers/modalReduc
 import { RootState, useAppDispatch, useAppSelector } from "../../../store"
 import { Toaster, toast } from "react-hot-toast"
 import { setCurrentUser, setSession } from "../../../store/reducers/userReducer"
+import {REACT_APP_SERVER_URL} from '../../../../config'
 
 export type RegisterFormValues = {
     name: string,
@@ -76,7 +77,7 @@ const LoginAndRegisterForm = () => {
         console.log({ modifiedData });
 
         return await axios.post(
-            'https://pf-henry-back-two.vercel.app/users/register',
+            `${REACT_APP_SERVER_URL}/users/register`,
             modifiedData
         );
     }
@@ -101,7 +102,7 @@ const LoginAndRegisterForm = () => {
     const loginUser = async (data: LoginFormValues) => {
         console.log("login User")
         return await axios.post(
-            'https://pf-henry-back-two.vercel.app/auth/login',
+            `${REACT_APP_SERVER_URL}/auth/login`,
             data
         );
     }
@@ -254,7 +255,7 @@ const LoginAndRegisterForm = () => {
                                     },
                                     validate: {
                                         isExist: async (fieldValue) => {
-                                            const response = await axios.get("https://pf-henry-back-two.vercel.app/users")
+                                            const response = await axios.get("${REACT_APP_SERVER_URL}/users")
                                             let alreadyExistEmail = false;
                                             if (response.data.find((user: User) => user.email.toLowerCase() === fieldValue.toLowerCase())) {
                                                 alreadyExistEmail = false;
@@ -380,7 +381,7 @@ const LoginAndRegisterForm = () => {
                                 },
                                 validate: {
                                     // isExist: async (fieldValue) => {
-                                    //     const response = await axios.get("https://pf-henry-back-two.vercel.app/users")
+                                    //     const response = await axios.get("${REACT_APP_SERVER_URL}/users")
 
                                     //     let alreadyExistEmail = false;
                                     //     if (response.data.find((user: User) => user.email.toLowerCase() === fieldValue.toLowerCase())) {

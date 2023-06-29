@@ -35,10 +35,7 @@ export const getProducts = createAsyncThunk(
 export const getAllProducts = createAsyncThunk(
   'allProducts/get',
   async (thunkApi) => {
-   
-    const response = await axios.get(
-      `http://localhost:3001/products/all`
-    );
+    const response = await axios.get(`http://localhost:3001/products/all`);
     return response.data;
   }
 );
@@ -76,7 +73,7 @@ export const logicDeleteProductByID = createAsyncThunk(
     const response = await axios.put(
       `http://localhost:3001/products/changeactivation/${product.id}`,
       {
-        isActive: product.isActive ? false : true
+        isActive: product.isActive ? false : true,
       }
     );
 
@@ -95,9 +92,7 @@ export const getAllCategories = createAsyncThunk(
     //   }
     // );
 
-    const response = await axios.get(
-      `http://localhost:3001/categories`,
-    );
+    const response = await axios.get(`http://localhost:3001/categories`);
     return response.data;
   }
 );
@@ -109,7 +104,7 @@ export const getUsers = createAsyncThunk('users/get', async (thunkApi) => {
 
   console.log({ responseGetProducts: response });
 
-  const data = response.data
+  const data = response.data;
   return data;
 });
 
@@ -119,11 +114,25 @@ export const changeUserActivation = createAsyncThunk(
     const response = await axios.put(
       `http://localhost:3001/users/changeactivation/${user.id}`,
       {
-        active: user.active ? false : true
+        active: user.active ? false : true,
       }
     );
     return response.data;
   }
 );
 
+export const getCategories = createAsyncThunk(
+  'categories/get',
+  async (_, thunkApi) => {
+    try {
+      const response = await axios.get('http://localhost:3000/categories');
+      /*  console.log(response.data); // Log the API response data */
 
+      return response.data;
+    } catch (error) {
+      // Handle error case
+      console.error(error);
+      throw error;
+    }
+  }
+);

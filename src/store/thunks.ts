@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { Products, User } from '../types';
+import {REACT_APP_SERVER_URL} from '../../config'
 
 export const getUser = createAsyncThunk('user/get', async (thunkApi) => {
   const response = await axios.get(
-    'https://pf-henry-back-two.vercel.app/users'
+    `${REACT_APP_SERVER_URL}/users`
   );
 
   console.log({ responseGetProducts: response });
@@ -17,7 +18,7 @@ export const getProducts = createAsyncThunk(
   'products/get',
   async (userID: string, thunkApi) => {
     // const response = await axios.post(
-    //   'https://pf-henry-back-two.vercel.app/products?page=2',
+    //   '${REACT_APP_SERVER_URL}/products?page=2',
     //   {
     //     price: { isSorted: true, order: 'desc' },
     //     relevant: { isSorted: false, order: 'asc' },
@@ -25,7 +26,7 @@ export const getProducts = createAsyncThunk(
     // );
 
     const response = await axios.get(
-      `https://pf-henry-back-two.vercel.app/products/${userID}`
+      `${REACT_APP_SERVER_URL}/products/${userID}`
     );
 
     return response.data;
@@ -37,7 +38,7 @@ export const getAllProducts = createAsyncThunk(
   async (thunkApi) => {
    
     const response = await axios.get(
-      `http://localhost:3001/products/all`
+      `${REACT_APP_SERVER_URL}/products/all`
     );
     return response.data;
   }
@@ -47,7 +48,7 @@ export const getProductByID = createAsyncThunk(
   'productByID/get',
   async (productID: string, thunkApi) => {
     // const response = await axios.post(
-    //   'https://pf-henry-back-two.vercel.app/products?page=2',
+    //   '${REACT_APP_SERVER_URL}/products?page=2',
     //   {
     //     price: { isSorted: true, order: 'desc' },
     //     relevant: { isSorted: false, order: 'asc' },
@@ -55,7 +56,7 @@ export const getProductByID = createAsyncThunk(
     // );
 
     const response = await axios.get(
-      `https://pf-henry-back-two.vercel.app/products/detail/${productID}`
+      `${REACT_APP_SERVER_URL}/products/detail/${productID}`
     );
 
     return response.data;
@@ -66,7 +67,7 @@ export const logicDeleteProductByID = createAsyncThunk(
   'productByID/delete',
   async (product: Products, thunkApi) => {
     // const response = await axios.post(
-    //   'https://pf-henry-back-two.vercel.app/products?page=2',
+    //   '${REACT_APP_SERVER_URL}/products?page=2',
     //   {
     //     price: { isSorted: true, order: 'desc' },
     //     relevant: { isSorted: false, order: 'asc' },
@@ -74,7 +75,7 @@ export const logicDeleteProductByID = createAsyncThunk(
     // );
 
     const response = await axios.put(
-      `http://localhost:3001/products/changeactivation/${product.id}`,
+      `${REACT_APP_SERVER_URL}/products/changeactivation/${product.id}`,
       {
         isActive: product.isActive ? false : true
       }
@@ -88,7 +89,7 @@ export const getAllCategories = createAsyncThunk(
   'categories/get',
   async (thunkApi) => {
     // const response = await axios.post(
-    //   'https://pf-henry-back-two.vercel.app/products?page=2',
+    //   '${REACT_APP_SERVER_URL}/products?page=2',
     //   {
     //     price: { isSorted: true, order: 'desc' },
     //     relevant: { isSorted: false, order: 'asc' },
@@ -96,7 +97,7 @@ export const getAllCategories = createAsyncThunk(
     // );
 
     const response = await axios.get(
-      `http://localhost:3001/categories`,
+      `${REACT_APP_SERVER_URL}/categories`,
     );
     return response.data;
   }
@@ -104,7 +105,7 @@ export const getAllCategories = createAsyncThunk(
 
 export const getUsers = createAsyncThunk('users/get', async (thunkApi) => {
   const response = await axios.get(
-    'https://pf-henry-back-two.vercel.app/users'
+    `${REACT_APP_SERVER_URL}/users`
   );
 
   console.log({ responseGetProducts: response });
@@ -117,7 +118,7 @@ export const changeUserActivation = createAsyncThunk(
   'users/update',
   async (user: User, thunkApi) => {
     const response = await axios.put(
-      `http://localhost:3001/users/changeactivation/${user.id}`,
+      `${REACT_APP_SERVER_URL}/users/changeactivation/${user.id}`,
       {
         active: user.active ? false : true
       }

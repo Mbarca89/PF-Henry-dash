@@ -4,7 +4,6 @@ import { Route, Routes } from 'react-router-dom';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Calendar from './pages/Calendar';
-import Chart from './pages/Chart';
 import ECommerce from './pages/Dashboard/ECommerce';
 import FormElements from './pages/Form/FormElements';
 import FormLayout from './pages/Form/FormLayout';
@@ -69,7 +68,6 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/users" element={<Users />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/chart" element={<Chart />} />
             <Route path="/ui/alerts" element={<Alerts />} />
             <Route path="/ui/buttons" element={<Buttons />} />
             <Route path="/auth/signin" element={<SignIn />} />
@@ -92,7 +90,6 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/users" element={<Users />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/chart" element={<Chart />} />
             <Route path="/ui/alerts" element={<Alerts />} />
             <Route path="/ui/buttons" element={<Buttons />} />
             <Route path="/auth/signin" element={<SignIn />} />

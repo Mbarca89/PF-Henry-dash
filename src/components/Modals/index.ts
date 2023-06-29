@@ -1,7 +1,5 @@
-import ModalPostProduct from "./ModalPostProduct";
-import ModalUpdateProduct from "./ModalUpdateProduct";
+import ModalPostProduct from './ModalPostProduct';
+import ModalUpdateProduct from './ModalUpdateProduct';
+import ModalPostCategory from './ModalPostCategory';
 
-export {
-    ModalPostProduct,
-    ModalUpdateProduct
-}
+export { ModalPostProduct, ModalPostCategory, ModalUpdateProduct };

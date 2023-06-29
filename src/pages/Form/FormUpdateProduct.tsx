@@ -7,6 +7,7 @@ import axios from "axios";
 import { getProducts } from "../../store/thunks";
 import { clearCurrentProductID } from "../../store/reducers/userReducer";
 import { Products } from "../../types";
+import {REACT_APP_SERVER_URL} from '../../../config'
 
 // export type formValues = {
 //     name: string,
@@ -50,7 +51,7 @@ const FormUpdateProduct = () => {
         //     if (currentProductID) {
         //         console.log(currentProductID);
 
-        //         const response = await axios.get(`https://pf-henry-back-two.vercel.app/products/detail/${currentProductID}`)
+        //         const response = await axios.get(`${REACT_APP_SERVER_URL}/products/detail/${currentProductID}`)
         //         console.log(response.data);
 
         //         return response.data
@@ -115,7 +116,7 @@ const FormUpdateProduct = () => {
         // }
 
         return await axios.put(
-            'https://pf-henry-back-two.vercel.app/products/',
+            `${REACT_APP_SERVER_URL}/products/`,
             currentUpdatedProduct
         );
     }
@@ -174,7 +175,7 @@ const FormUpdateProduct = () => {
                                             validate: {
                                                 // nameAlreadyExist: async (fieldValue) => {
                                                 //     const response = await axios.post(
-                                                //         'https://pf-henry-back-two.vercel.app/products?page=1',
+                                                //         '${REACT_APP_SERVER_URL}/products?page=1',
                                                 //         {
                                                 //             price: { isSorted: true, order: 'desc' },
                                                 //             relevant: { isSorted: false, order: 'asc' },

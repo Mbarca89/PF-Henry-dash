@@ -25,9 +25,8 @@ function App() {
   const session = useAppSelector((state: RootState) => state.user.session)
   const dispatch = useAppDispatch()
   const [role, setRole] = useState<String>('')
-
+  let userExist = false;
   useEffect(() => {
-    let userExist = false;
     if (localStorage.getItem("user")) {
       userExist = true
       dispatch(setSession(true))
@@ -53,17 +52,15 @@ function App() {
 
   }, [session]);
 
-
   return (
-    role && (
       !session ? userExist ? (
         <>
           {
             dispatch(setSession(true))
           }
           <Routes>
-            {role === 'admin' && <Route path="/" element={<ECommerce />} />}
-            {role === 'seller' && <Route path="/" element={<ECommerceSeller />} />}
+            <Route path="/" element={<ECommerce />} />
+            <Route path="/" element={<ECommerceSeller />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/forms/form-elements" element={<FormElements />} />
@@ -103,8 +100,6 @@ function App() {
       )
 
     )
-
-  );
 }
 
 export default App;

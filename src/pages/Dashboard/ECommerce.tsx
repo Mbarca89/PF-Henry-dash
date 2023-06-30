@@ -3,14 +3,9 @@ import CardOne from '../../components/CardOne';
 import CardThree from '../../components/CardThree';
 import CardTwo from '../../components/CardTwo';
 import ChartOne from '../../components/ChartOne';
-import ChartTwo from '../../components/ChartTwo';
 import DefaultLayout from '../../layout/DefaultLayout';
 import axios from 'axios';
 import { REACT_APP_SERVER_URL } from '../../../config'
-
-import { useSelector, useDispatch } from "react-redux"
-import { RootState } from '../../store';
-import { changeIncrementAmount, decrement, increment } from '../../store/reducers/counterReducer';
 import { useEffect, useState } from 'react'
 
 const ECommerce = () => {
@@ -35,15 +30,6 @@ const ECommerce = () => {
     getStats()
     setReady(true)
   }, [])
-
-  // use store from Redux Toolkit
-  const count = useSelector((state: RootState) => state.counter.value)
-  const incrementAmount = useSelector((state: RootState) => state.counter.incrementAmount);
-  const dispatch = useDispatch();
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    dispatch(changeIncrementAmount(Number(e.target.value)));
-  }
 
   return (
     <DefaultLayout>

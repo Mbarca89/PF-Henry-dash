@@ -70,11 +70,10 @@ const LoginAndRegisterForm = () => {
     };
 
     const registerUser = async (data: RegisterFormValues) => {
-        console.log('register User');
-        console.log(data);
+       
         
         const modifiedData = { ...data, role: 'seller' };
-        console.log({ modifiedData });
+       
 
         return await axios.post(
             `${REACT_APP_SERVER_URL}/users/register`,
@@ -100,7 +99,6 @@ const LoginAndRegisterForm = () => {
     }
 
     const loginUser = async (data: LoginFormValues) => {
-        console.log("login User")
         return await axios.post(
             `${REACT_APP_SERVER_URL}/auth/login`,
             data
@@ -114,12 +112,12 @@ const LoginAndRegisterForm = () => {
 
 
     useEffect(() => {
-        console.log("loginform");
+       
 
         //handling toast
         if (toastModal.isActive) {
             if (toastModal.type == "success") {
-                console.log("success");
+               
 
                 toast.success(toastModal.message, {
                     duration: 4000,
@@ -129,7 +127,7 @@ const LoginAndRegisterForm = () => {
                     dispatch(clearStateToast())
                 }, 10000);
             } else {
-                console.log("error");
+               
                 toast.error(toastModal.message, {
                     duration: 6000,
                 });
@@ -160,6 +158,8 @@ const LoginAndRegisterForm = () => {
                         }
                         if (!localStorage.getItem("user")) {
                             localStorage.setItem('user', JSON.stringify(response));
+                            const token = response.data.token;
+                            localStorage.setItem("token", token);
                         }
                     } else {
                         throw Error("Usuario inautorizado.")
@@ -169,7 +169,7 @@ const LoginAndRegisterForm = () => {
                     // SI TODO SALE MAL
                     dispatch(activeToast({
                         isOk: false,
-                        message: `Ocurrio un problema. ${error.message ? error?.message : error?.response?.data}`
+                        message: `Ocurrio un problema. ${error?.response?.data}`
                     }))
                 })
                 loginReset()
@@ -197,10 +197,10 @@ const LoginAndRegisterForm = () => {
                     if (!localStorage.getItem("user")) {
                         localStorage.setItem('user', JSON.stringify(response));
                     }
-                    console.log(response);
+                    
                 }).catch(error => {
                     // SI TODO SALE MAL
-                    console.log(error);
+                   
                     dispatch(activeToast({
                         isOk: false,
                         message: `Ocurrio un problema. ${error?.response?.data}`
@@ -255,7 +255,7 @@ const LoginAndRegisterForm = () => {
                                     },
                                     validate: {
                                         isExist: async (fieldValue) => {
-                                            const response = await axios.get("${REACT_APP_SERVER_URL}/users")
+                                            const response = await axios.get(`${REACT_APP_SERVER_URL}/users`)
                                             let alreadyExistEmail = false;
                                             if (response.data.find((user: User) => user.email.toLowerCase() === fieldValue.toLowerCase())) {
                                                 alreadyExistEmail = false;

@@ -14,12 +14,9 @@ const Users = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    // console.log("products");
     dispatch(getUser())
     if (toastModal.isActive) {
       if (toastModal.type == "success") {
-        console.log("success");
-
         toast.success(toastModal.message, {
           duration: 4000,
         });
@@ -28,7 +25,6 @@ const Users = () => {
           dispatch(clearStateToast())
         }, 10000);
       } else {
-        console.log("errpr");
         toast.error(toastModal.message, {
           duration: 6000,
         });

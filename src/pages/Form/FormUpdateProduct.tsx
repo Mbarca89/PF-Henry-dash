@@ -7,7 +7,7 @@ import axios from "axios";
 import { getProducts } from "../../store/thunks";
 import { clearCurrentProductID } from "../../store/reducers/userReducer";
 import { Products } from "../../types";
-import {REACT_APP_SERVER_URL} from '../../../config'
+import { REACT_APP_SERVER_URL } from '../../../config'
 
 // export type formValues = {
 //     name: string,
@@ -29,11 +29,6 @@ let images: FileList
 const FormUpdateProduct = () => {
     const currentProductID = useAppSelector((state: RootState) => state.user.currentProductID)
     const currentProductbyID = useAppSelector((state: RootState) => state.user.currentProductbyID)
-    // console.log(currentProductID);
-    // const [aux, setaux] = useState(true)
-    // if(currentProductID){
-    //     setaux(!aux);
-    // }
 
     const dispatch = useAppDispatch();
     const activeDrop = useState(false)
@@ -49,11 +44,9 @@ const FormUpdateProduct = () => {
     const form = useForm<Products>({
         // defaultValues: async () => {
         //     if (currentProductID) {
-        //         console.log(currentProductID);
-
+        //         
         //         const response = await axios.get(`${REACT_APP_SERVER_URL}/products/detail/${currentProductID}`)
-        //         console.log(response.data);
-
+        //         
         //         return response.data
         //     } 
         // },
@@ -68,14 +61,13 @@ const FormUpdateProduct = () => {
     const onSubmit = (data: Products) => {
         // dispatch(hiddenPostProductModal())
         // setcurrentPostProduct(data)
-        console.log({Set: data});
-        
+
         setcurrentUpdatedProduct(data);
-        // console.log(currentPostProduct);
+
     }
 
     const onError = (errors: FieldErrors<Products>) => {
-        console.log({errors});
+        console.log({ errors });
     }
 
     // hidden Modal Post Product
@@ -93,22 +85,15 @@ const FormUpdateProduct = () => {
         if (e.target.files) {
             images = e.target.files
         }
-        console.log(images)
     };
 
 
     // Update product
     const uploadUpdatedProduct = async (data: Products) => {
         // let formData = new FormData();
-        console.log({ currentUpdatedProduct2: currentProductbyID });
 
-        // console.log(currentUpdatedProduct?.photos[0]);
-
-        // console.log({ data, photos: currentUpdatedProduct?.photos[0] });
-        // console.log(data.photos);
 
         // formData.append('data', JSON.stringify(currentUpdatedProduct))
-        // console.log(images)
         // if (images.length) {
         //     for (let i = 0; i < images.length; i++) {
         //         formData.append('photos', images[i])
@@ -127,11 +112,9 @@ const FormUpdateProduct = () => {
 
                 dispatch(hiddenUpdateProductModal())
 
-                console.log({ defaultvalues: formState.defaultValues })
-                console.log({ currentProductbyID });
 
                 uploadUpdatedProduct(currentUpdatedProduct as Products).then(response => {
-                    console.log(response);
+
 
                     dispatch(activeToast({
                         isOk: true,
@@ -139,7 +122,7 @@ const FormUpdateProduct = () => {
                     }))
                     dispatch(getProducts(currentUser.id))
                 }).catch(error => {
-                    console.log(error);
+
 
                     dispatch(activeToast({
                         isOk: false,
@@ -289,8 +272,6 @@ const FormUpdateProduct = () => {
                 <div className="flex items-center justify-end gap-x-4">
                     <button type="button" onClick={handleHiddenPostProductModal} className="text-sm font-semibold  text-gray-900 px-3 py-2 rounded-md bg-meta-7 text-white">Cancel</button>
                     <button type="submit" onClick={() => {
-                        console.log("presiono aqui");
-
                     }} disabled={!isDirty || !isValid || isSubmitting} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting) ? "bg-bodydark" : "bg-meta-3"}`}>Update</button>
                 </div>
             </form>

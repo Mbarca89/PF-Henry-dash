@@ -8,7 +8,7 @@ export const getUser = createAsyncThunk('user/get', async (thunkApi) => {
     `${REACT_APP_SERVER_URL}/users`
   );
 
-  console.log({ responseGetProducts: response });
+
 
   const data = response.data[1];
   return data;
@@ -107,8 +107,6 @@ export const getUsers = createAsyncThunk('users/get', async (thunkApi) => {
   const response = await axios.get(
     `${REACT_APP_SERVER_URL}/users`
   );
-
-  console.log({ responseGetProducts: response });
 
   const data = response.data
   return data;

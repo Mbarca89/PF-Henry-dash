@@ -33,8 +33,6 @@ const TableFive = () => {
   }
 
   const handleDeleteProduct = (product: Products) => {
-    console.log();
-
     dispatch(logicDeleteProductByID(product))
     setaux(!aux)
   }
@@ -54,7 +52,7 @@ const TableFive = () => {
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="py-6 px-4 md:px-6 xl:px-7.5">
         <h4 className="text-xl font-semibold text-black dark:text-white">
-          Products
+          Productos
         </h4>
       </div>
       <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
@@ -62,19 +60,19 @@ const TableFive = () => {
           <p className="font-medium"></p>
         </div>
         <div className="col-span-2 flex items-center">
-          <p className="font-medium">Product Name</p>
+          <p className="font-medium">Nombre</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Seller</p>
+          <p className="font-medium">Vendedor</p>
         </div>
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Stock</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Status</p>
+          <p className="font-medium">Estado</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Change Status</p>
+          <p className="font-medium">Cambiar estado</p>
         </div>
         {/* <div className="col-span-1 flex items-center">
           <p className="font-medium">Delete</p>
@@ -130,10 +128,10 @@ const TableFive = () => {
               <div className="col-span-1 flex items-center">
                 {
                   product.isActive ? (
-                    <p className="text-sm text-meta-3">active</p>
+                    <p className="text-sm text-meta-3">activo</p>
                   ) : (
                     <p className="text-sm text-danger">
-                      not active
+                      inactivo
                     </p>
                   )
                 }

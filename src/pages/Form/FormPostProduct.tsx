@@ -6,6 +6,7 @@ import { activeToast, hiddenPostProductModal } from "../../store/reducers/modalR
 import axios from "axios";
 import { getProducts } from "../../store/thunks";
 import { Categorie } from "../../types";
+import { REACT_APP_SERVER_URL } from '../../../config'
 
 export type formValues = {
     name: string,
@@ -33,7 +34,7 @@ const FormPostProduct = () => {
     const form = useForm<formValues>({
         // defaultValues: async () => {
         //     if(isUpdate){
-        //         const response = await axios(`https://pf-henry-back-two.vercel.app/products/${currentUser.id}`);
+        //         const response = await axios(`${REACT_APP_SERVER_URL}/products/${currentUser.id}`);
         //     const data = response.data;
         //     return data
         //     } else {
@@ -50,11 +51,7 @@ const FormPostProduct = () => {
     const [currentPostProduct, setcurrentPostProduct] = useState<formValues>()
 
     const onSubmit = (data: formValues) => {
-        console.log(data);
-        // dispatch(hiddenPostProductModal())
-        // setcurrentPostProduct(data)
         setcurrentPostProduct({ ...data, photos: formData });
-        // console.log(currentPostProduct);
     }
 
     const onError = (errors: FieldErrors<formValues>) => {
@@ -75,7 +72,6 @@ const FormPostProduct = () => {
         if (e.target.files) {
             images = e.target.files
         }
-        console.log(images)
     };
 
 
@@ -84,30 +80,25 @@ const FormPostProduct = () => {
         let formData = new FormData();
 
         formData.append('data', JSON.stringify({ ...currentPostProduct, userId: currentUser.id }))
-        console.log(images)
         for (let i = 0; i < images.length; i++) {
             formData.append('photos', images[i])
         }
-        // https://pf-henry-back-two.vercel.app/products/post
+        // ${REACT_APP_SERVER_URL}/products/post
 
 
         return await axios.post(
-            'http://185.253.153.34:3001/products/post',
+            `${REACT_APP_SERVER_URL}/products/post`,
             formData
         );
     }
 
     useEffect(() => {
-        // console.log("formPostProduct");
-
         if (isSubmitted) {
             if (isSubmitSuccessful) {
 
                 dispatch(hiddenPostProductModal())
 
                 postProduct(currentPostProduct as formValues).then(response => {
-                    console.log(response);
-
                     dispatch(activeToast({
                         isOk: true,
                         message: `El producto ${response?.data?.name} fue creado exitosamente`
@@ -152,7 +143,7 @@ const FormPostProduct = () => {
                                             validate: {
                                                 // nameAlreadyExist: async (fieldValue) => {
                                                 //     const response = await axios.post(
-                                                //         'https://pf-henry-back-two.vercel.app/products?page=1',
+                                                //         '${REACT_APP_SERVER_URL}/products?page=1',
                                                 //         {
                                                 //             price: { isSorted: true, order: 'desc' },
                                                 //             relevant: { isSorted: false, order: 'asc' },

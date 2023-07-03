@@ -49,15 +49,12 @@ const TableTwo = () => {
   }
 
   const handleDeleteProduct = (product: Products) => {
-    console.log();
-
     dispatch(logicDeleteProductByID(product))
     setaux(!aux)
   }
 
   useEffect(() => {
-    // console.log("products");
-    dispatch(getProducts(currentUser.id));    
+    dispatch(getProducts(currentUser.id));
     dispatch(getAllCategories())
     setTimeout(() => setLoading(false), 1000);
     setTimeout(() => dispatch(getProducts(currentUser.id)), 100);
@@ -71,7 +68,7 @@ const TableTwo = () => {
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="py-6 px-4 md:px-6 xl:px-7.5">
         <h4 className="text-xl font-semibold text-black dark:text-white">
-          My Products
+          Mis Productos
         </h4>
       </div>
       <div
@@ -79,18 +76,18 @@ const TableTwo = () => {
         className="absolute cursor-pointer right-2 top-2 rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
       >
         <button onClick={handleStateToast}>
-          Add Product
+          Agregar Producto
         </button>
       </div>
       <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
         <div className="col-span-2 flex items-center">
-          <p className="font-medium">Product Name</p>
+          <p className="font-medium">Nombre</p>
         </div>
         <div className="col-span-2 hidden items-center sm:flex">
-          <p className="font-medium">Category</p>
+          <p className="font-medium">Categoria</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Price</p>
+          <p className="font-medium">Precio</p>
         </div>
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Rating</p>
@@ -98,16 +95,13 @@ const TableTwo = () => {
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Stock</p>
         </div>
-        {/* <div className="col-span-1 flex items-center">
-          <p className="font-medium">Delete</p>
-        </div> */}
       </div>
       {
         products?.map(product => {
 
           return (
             <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5" key={crypto.randomUUID()}>
-              <div className="col-span-3 flex items-center">
+              <div className="col-span-2 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <div className="h-12.5 w-15 rounded-md">
                     <img src={product?.photos[0]?.url} alt="Product" />
@@ -127,7 +121,7 @@ const TableTwo = () => {
                   }
                 </div>
               </div>
-              <div className="col-span-1 hidden items-center sm:flex">
+              <div className="col-span-2 hidden items-center sm:flex">
                 {
                   product.isActive ? (
                     <p className="text-sm text-black dark:text-white">{product.description}</p>

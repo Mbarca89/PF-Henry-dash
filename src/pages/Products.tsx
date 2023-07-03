@@ -2,7 +2,6 @@ import Breadcrumb from '../components/Breadcrumb';
 import { ModalUpdateProduct, ModalPostProduct } from '../components/Modals';
 import { Toaster, toast } from "react-hot-toast";
 import TableOne from '../components/TableOne';
-import TableThree from '../components/TableThree';
 import TableTwo from '../components/TableTwo';
 import DefaultLayout from '../layout/DefaultLayout';
 import { RootState, useAppDispatch, useAppSelector } from '../store';
@@ -21,13 +20,10 @@ const Products = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    // console.log("products");
     if(currentUser.role === 'admin'){
       dispatch(getAllProducts())
       if (toastModal.isActive) {
-        if (toastModal.type == "success") {
-          console.log("success");
-  
+        if (toastModal.type == "success") {  
           toast.success(toastModal.message, {
             duration: 4000,
           });
@@ -36,7 +32,6 @@ const Products = () => {
             dispatch(clearStateToast())
           }, 10000);
         } else {
-          console.log("errpr");
           toast.error(toastModal.message, {
             duration: 6000,
           });
@@ -48,9 +43,7 @@ const Products = () => {
     } else {
       dispatch(getProducts(currentUser.id))
       if (toastModal.isActive) {
-        if (toastModal.type == "success") {
-          console.log("success");
-  
+        if (toastModal.type == "success") {  
           toast.success(toastModal.message, {
             duration: 4000,
           });
@@ -59,7 +52,6 @@ const Products = () => {
             dispatch(clearStateToast())
           }, 10000);
         } else {
-          console.log("errpr");
           toast.error(toastModal.message, {
             duration: 6000,
           });
@@ -96,7 +88,7 @@ const Products = () => {
         </ModalPostOtherProduct>
       </div> */}
       <DefaultLayout>
-        <Breadcrumb pageName="Products" />
+        <Breadcrumb pageName="Productos" />
         <div className="flex flex-col gap-10 relative">
           {currentUser.role === 'seller' ? <TableTwo /> : <TableFive/>}
           {/* <TableOne />

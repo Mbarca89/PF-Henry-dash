@@ -12,7 +12,13 @@ export type valuesUpdateProduct = {
 
 export interface modelState {
   postProductModalisActive: boolean;
+
   updateProductModal: {
+    isActive: boolean;
+    values: valuesUpdateProduct;
+  };
+
+  activeUpdateCategoryModal: {
     isActive: boolean;
     values: valuesUpdateProduct;
   };
@@ -33,7 +39,21 @@ export interface modelState {
 
 const initialState: modelState = {
   postProductModalisActive: false,
+
+
   updateProductModal: {
+    isActive: false,
+    values: {
+      name: '',
+      category: '',
+      freeShipping: false,
+      description: '',
+      price: 0,
+      stock: 0,
+    },
+  },
+
+  activeUpdateCategoryModal: {
     isActive: false,
     values: {
       name: '',
@@ -69,6 +89,11 @@ export const modalSlice = createSlice({
     hiddenPostProductModal: (state) => {
       state.postProductModalisActive = false;
     },
+
+
+
+
+
     activeUpdateProductModal: (
       state,
       action: PayloadAction<{ isActive: boolean; values?: valuesUpdateProduct }>
@@ -89,6 +114,28 @@ export const modalSlice = createSlice({
         stock: 0,
       };
     },
+
+    activeUpdateCategoryModal: (
+      state,
+      action: PayloadAction<{ isActive: boolean; values?: valuesUpdateProduct }>
+    ) => {
+      state.updateProductModal.isActive = action.payload.isActive;
+      if (action.payload.values) {
+        state.updateProductModal.values = action.payload?.values;
+      }
+    },
+    hiddenUpdateCategoryModal: (state) => {
+      state.updateProductModal.isActive = false;
+      state.updateProductModal.values = {
+        name: '',
+        category: '',
+        freeShipping: false,
+        description: '',
+        price: 0,
+        stock: 0,
+      };
+    },
+
     activeToast: (
       state,
       action: PayloadAction<{ isOk: boolean; message: string }>
@@ -114,6 +161,8 @@ export const {
   hiddenPostProductModal,
   activeUpdateProductModal,
   hiddenUpdateProductModal,
+  activeUpdateCategoryModal,
+  hiddenUpdateCategoryModal,
   activeToast,
   clearStateToast,
 } = modalSlice.actions;

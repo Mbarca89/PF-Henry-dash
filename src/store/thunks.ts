@@ -125,4 +125,19 @@ export const changeUserActivation = createAsyncThunk(
   }
 );
 
+export const getCategories = createAsyncThunk(
+  'categories/get',
+  async (_, thunkApi) => {
+    try {
+      const response = await axios.get(`${REACT_APP_SERVER_URL}/categories`);
+      /*  console.log(response.data); // Log the API response data */
+
+      return response.data;
+    } catch (error) {
+      // Handle error case
+      console.error(error);
+      throw error;
+    }
+  }
+);
 

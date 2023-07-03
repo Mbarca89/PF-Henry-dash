@@ -14,6 +14,7 @@ import Users from './pages/Users';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import LoginForm from './pages/Form/LoginForm/LoginForm';
+import Category from './pages/Category';
 import { RootState, useAppDispatch, useAppSelector } from './store';
 import { setCurrentUser, setSession } from './store/reducers/userReducer'
 
@@ -83,6 +84,7 @@ function App() {
         <>
           <Routes>
             {role === 'admin' && <Route path="/" element={<ECommerce />} />}
+            {role === 'admin' && <Route path="/category" element={<Category />} />}
             {role === 'seller' && <Route path="/" element={<ECommerceSeller />} />}
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/profile" element={<Profile />} />

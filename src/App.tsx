@@ -46,8 +46,8 @@ function App() {
     const item = localStorage.getItem("user");
     if (item) {
       const userData = { ...JSON.parse(item) }
-      dispatch(setCurrentUser(userData.data.newUser))
-      setRole(userData.data.newUser.role)
+      dispatch(setCurrentUser(userData.data.user))
+      setRole(userData.data.user.role)
     }
     setTimeout(() => setLoading(false), 1000);
 

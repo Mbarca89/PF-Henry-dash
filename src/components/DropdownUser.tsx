@@ -17,8 +17,9 @@ const DropdownUser = () => {
   // onLogout
   const onLogout = () => {
     localStorage.removeItem("user");
-    // window.location.href="/";
+    localStorage.removeItem("token");
     dispatch(setSession(false));
+    window.location.href="/";
   }
   // onLogout
 

@@ -61,6 +61,8 @@ const FormUpdateCategory = () => {
 
   const dispatch = useAppDispatch();
   const activeDrop = useState(false);
+  const [handleDisabledButtonEliminar, sethandleDisabledButtonEliminar] = useState(true)
+  const [handleDisabledButtonActualizar, sethandleDisabledButtonActualizar] = useState(true)
 
   const form = useForm<formValues>({
     mode: 'all',
@@ -211,6 +213,7 @@ const FormUpdateCategory = () => {
                       defaultValue={'Seleccionar Categoría'}
                       className="text-gray-900 placeholder:text-gray-400 block w-full flex-1 border-0 bg-transparent py-1.5 pl-1 focus:ring-0 sm:text-sm sm:leading-6"
                       onChange={(e) => {
+                        sethandleDisabledButtonActualizar(false)
                         const selectedCategoryId = e.target.value;
                         const selectedCategoryObject = categories.find(
                           (category) => category.id === selectedCategoryId
@@ -278,16 +281,16 @@ const FormUpdateCategory = () => {
             onClick={() => {
               console.log('presiono aqui');
             }}
-            disabled={!isDirty || !isValid || isSubmitting}
-            className={`bg-indigo-600 hover:bg-indigo-500 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${!isDirty || !isValid || isSubmitting ? 'bg-bodydark' : 'bg-meta-3'
+            disabled={handleDisabledButtonActualizar}
+            className={`bg-indigo-600 hover:bg-indigo-500 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${handleDisabledButtonActualizar ? 'bg-bodydark' : 'bg-meta-3'
               }`}
           >
-            Actulizar
+            Actualizar
           </button>
         </div>
       </form>
-              <hr className='mt-2 ring-gray-300'/>
-              <form onSubmit={handleSubmit(onSubmitDelete)} noValidate>
+      <hr className='mt-2 ring-gray-300' />
+      <form onSubmit={handleSubmit(onSubmitDelete)} noValidate>
         <div className=" text-black">
           <div className="pb-6">
             <div className="grid grid-cols-1 gap-x-6 gap-y-1 sm:grid-cols-6">
@@ -306,6 +309,7 @@ const FormUpdateCategory = () => {
                       defaultValue={'Seleccionar Categoría'}
                       className="text-gray-900 placeholder:text-gray-400 block w-full flex-1 border-0 bg-transparent py-1.5 pl-1 focus:ring-0 sm:text-sm sm:leading-6"
                       onChange={(e) => {
+                        sethandleDisabledButtonEliminar(false)
                         console.log('onChange event fired');
                         const selectedCategoryId = e.target.value;
                         console.log('selectedCategoryId:', selectedCategoryId);
@@ -358,7 +362,9 @@ const FormUpdateCategory = () => {
             onClick={() => {
               console.log('presiono aqui');
             }}
-            className={`bg-indigo-600 hover:bg-indigo-500 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-meta-3`}>
+            disabled={handleDisabledButtonEliminar}
+            className={`bg-indigo-600 hover:bg-indigo-500 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${handleDisabledButtonEliminar ? 'bg-bodydark' : 'bg-meta-3'
+              }`}>
             Eliminar
           </button>
         </div>

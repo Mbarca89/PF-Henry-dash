@@ -5,12 +5,16 @@ import { activePostProductModal, activeUpdateProductModal, clearStateToast } fro
 import { setCurrentProductID } from '../store/reducers/userReducer';
 import { BsFillFileArrowDownFill, BsFillFileArrowUpFill, BsFillTrashFill } from "react-icons/bs"
 import { Products } from '../types';
+import axios from 'axios';
+import { REACT_APP_SERVER_URL } from '../../config';
 
 const TableTwo = () => {
   const products = useAppSelector((state: RootState) => state.user.products)
   const toastModal = useAppSelector((state: RootState) => state.modals.toastModal)
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state: RootState) => state.user.userData)
+  const [gallery, setGallery] = useState(false)
+  const [photos, setPhotos] = useState([])
 
   const [aux, setaux] = useState(false)
 
@@ -60,6 +64,21 @@ const TableTwo = () => {
     setTimeout(() => dispatch(getProducts(currentUser.id)), 100);
   }, [currentUser, aux])
 
+  const showGallery = async (product: Products) => {
+    try {
+      const { data } = await axios(`${REACT_APP_SERVER_URL}/products/photos/${product.id}`)
+      setPhotos(data)
+      setGallery(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  const closeGallery = () => {
+    setGallery(false)
+    setPhotos([])
+  }
+
   return loading ? (
     <div
       className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"
@@ -84,7 +103,7 @@ const TableTwo = () => {
           <p className="font-medium">Nombre</p>
         </div>
         <div className="col-span-2 hidden items-center sm:flex">
-          <p className="font-medium">Categoria</p>
+          <p className="font-medium">Descripción</p>
         </div>
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Precio</p>
@@ -98,13 +117,12 @@ const TableTwo = () => {
       </div>
       {
         products?.map(product => {
-
           return (
             <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5" key={crypto.randomUUID()}>
               <div className="col-span-2 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <div className="h-12.5 w-15 rounded-md">
-                    <img src={product?.photos[0]?.url} alt="Product" />
+                    <img src={product?.photos[0]?.url} alt="Product" onClick={() => showGallery(product)} />
                   </div>
                   {
                     product.isActive ? (
@@ -147,10 +165,10 @@ const TableTwo = () => {
               <div className="col-span-1 flex items-center">
                 {
                   product.isActive ? (
-                    <p className="text-sm text-black dark:text-white">{product.rating}</p>
+                    <p className="text-sm text-black dark:text-white">{product.ratingAverage}</p>
                   ) : (
                     <p>
-                      {product.rating}
+                      {product.ratingAverage}
                     </p>
                   )
                 }
@@ -185,6 +203,22 @@ const TableTwo = () => {
           )
         })
       }
+      {gallery && <div className="w-full h-100 fixed bg-transparent flex justify-center z-99999 top-36">
+        <div className='w-100 h-full absolute bg-boxdark flex flex-col z-99999 left-70'>
+          <div className="flex justify-center gap-x-4">
+            <p className="text-sm text-white dark:text-white">Imagenes del producto</p>
+            <p onClick={closeGallery} className="absolute top-1 right-1 cursor-pointer text-sm text-white dark:text-white">X</p>
+          </div>
+          <div className='grid grid-cols-3 mt-10' >
+          {photos.map((photo: any,index) => {
+            return <div>
+              <p className='cursor-pointer w-5'>X</p>
+              <img src={photo.url} className='w-30'></img>
+              </div>
+          })}
+          </div>
+        </div>
+      </div>}
     </div>
   );
 };

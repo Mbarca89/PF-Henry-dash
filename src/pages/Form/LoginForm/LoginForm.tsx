@@ -227,10 +227,10 @@ const LoginAndRegisterForm = () => {
                 <div className={`container ${rightPanelActive && rightPanelActive}`} id="container">
                     <div className="formContainer registerContainer">
                         <form className="form registerForm" onSubmit={registerHandleSubmit(registerOnSubmit, onRegisterError)} noValidate>
-                            <h1 className="h1 col-span-2">Register here.</h1>
+                            <h1 className="h1 col-span-2">Regístrate</h1>
                             <div>
-                                {registerErrors.name?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Name&nbsp;</span>{registerErrors.name?.message}</span>}
-                                <input type="text" placeholder="Name" className="input col-start-1 col-span-1" {...registerRegister('name', {
+                                {registerErrors.name?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Nombre&nbsp;</span>{registerErrors.name?.message}</span>}
+                                <input type="text" placeholder="Nombre" className="input col-start-1 col-span-1" {...registerRegister('name', {
                                     required: {
                                         value: true,
                                         message: '*',
@@ -268,8 +268,8 @@ const LoginAndRegisterForm = () => {
                                 })} />
                             </div>
                             <div>
-                                {registerErrors.password?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Password&nbsp;</span>{registerErrors.password?.message}</span>}
-                                <input type="password" placeholder="Password" className="input col-start-1 col-span-1" {...registerRegister('password', {
+                                {registerErrors.password?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Contraseña&nbsp;</span>{registerErrors.password?.message}</span>}
+                                <input type="password" placeholder="Contraseña" className="input col-start-1 col-span-1" {...registerRegister('password', {
                                     required: {
                                         value: true,
                                         message: '*',
@@ -281,8 +281,8 @@ const LoginAndRegisterForm = () => {
                                 })} />
                             </div>
                             <div>
-                                {registerErrors.address?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Address&nbsp;</span>{registerErrors.address?.message}</span>}
-                                <input type="text" placeholder="Address" className="input col-start-2 col-span-1" {...registerRegister('address', {
+                                {registerErrors.address?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Dirección&nbsp;</span>{registerErrors.address?.message}</span>}
+                                <input type="text" placeholder="Dirección" className="input col-start-2 col-span-1" {...registerRegister('address', {
                                     required: {
                                         value: true,
                                         message: '*',
@@ -294,8 +294,8 @@ const LoginAndRegisterForm = () => {
                                 })} />
                             </div>
                             <div>
-                                {registerErrors.city?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">City&nbsp;</span>{registerErrors.city?.message}</span>}
-                                <input type="text" placeholder="City" className="input col-start-1 col-span-1" {...registerRegister('city', {
+                                {registerErrors.city?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Ciudad&nbsp;</span>{registerErrors.city?.message}</span>}
+                                <input type="text" placeholder="Ciudad" className="input col-start-1 col-span-1" {...registerRegister('city', {
                                     required: {
                                         value: true,
                                         message: '*',
@@ -307,8 +307,8 @@ const LoginAndRegisterForm = () => {
                                 })} />
                             </div>
                             <div>
-                                {registerErrors.province?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Province&nbsp;</span>{registerErrors.province?.message}</span>}
-                                <input type="text" placeholder="Province" className="input col-start-2 col-span-1" {...registerRegister('province', {
+                                {registerErrors.province?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Provincia&nbsp;</span>{registerErrors.province?.message}</span>}
+                                <input type="text" placeholder="Provincia" className="input col-start-2 col-span-1" {...registerRegister('province', {
                                     required: {
                                         value: true,
                                         message: '*',
@@ -320,8 +320,8 @@ const LoginAndRegisterForm = () => {
                                 })} />
                             </div>
                             <div>
-                                {registerErrors.postalCode?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Postal...Code&nbsp;</span>{registerErrors.postalCode?.message}</span>}
-                                <input type="text" placeholder="Postal Code" className="input col-start-1 col-span-1" {...registerRegister('postalCode', {
+                                {registerErrors.postalCode?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Código postal&nbsp;</span>{registerErrors.postalCode?.message}</span>}
+                                <input type="text" placeholder="Código postal" className="input col-start-1 col-span-1" {...registerRegister('postalCode', {
                                     required: {
                                         value: true,
                                         message: '*',
@@ -334,8 +334,8 @@ const LoginAndRegisterForm = () => {
                                 })} />
                             </div>
                             <div>
-                                {registerErrors.phone?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Phone&nbsp;</span>{registerErrors.phone?.message}</span>}
-                                <input type="text" placeholder="Phone" className="input col-start-2 col-span-1" {...registerRegister('phone', {
+                                {registerErrors.phone?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Teléfono&nbsp;</span>{registerErrors.phone?.message}</span>}
+                                <input type="text" placeholder="Teléfono" className="input col-start-2 col-span-1" {...registerRegister('phone', {
                                     required: {
                                         value: true,
                                         message: '*',
@@ -347,8 +347,8 @@ const LoginAndRegisterForm = () => {
                                 })} />
                             </div>
                             <div>
-                                {registerErrors.commerceName?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Commerce...Name&nbsp;</span>{registerErrors.commerceName?.message}</span>}
-                                <input type="text" placeholder="Commerce" className="input col-span-2" {...registerRegister('commerceName', {
+                                {registerErrors.commerceName?.message && <span className=" text-meta-7 text-[20px] absolute -translate-y-[8.3px]"><span className="text-black text-xs absolute translate-x-4">Tienda&nbsp;</span>{registerErrors.commerceName?.message}</span>}
+                                <input type="text" placeholder="Tienda" className="input col-span-2" {...registerRegister('commerceName', {
                                     required: {
                                         value: true,
                                         message: '*',
@@ -359,7 +359,7 @@ const LoginAndRegisterForm = () => {
                                     },
                                 })} />
                             </div>
-                            <button className="button col-span-2" disabled={!registerIsDirty || !registerIsValid || registerIsSubmitting} type="submit">Register</button>
+                            <button className="button col-span-2" disabled={!registerIsDirty || !registerIsValid || registerIsSubmitting} type="submit">Registrarme</button>
                             {/* <span className="span">or use your account</span>
                         <div className="socialContainer">
                             <a href="#" className="social a"><FcGoogle className="socialIcon" /></a>
@@ -369,7 +369,7 @@ const LoginAndRegisterForm = () => {
 
                     <div className="formContainer loginContainer">
                         <form className="form" onSubmit={loginHandleSubmit(loginOnSubmit, onLoginError)} noValidate>
-                            <h1 className="h1">Login here.</h1>
+                            <h1 className="h1">Ingresar</h1>
                             <input type="email" placeholder="Email" className="input" {...loginRegister("email", {
                                 required: {
                                     value: true,
@@ -395,10 +395,10 @@ const LoginAndRegisterForm = () => {
                                 }
                             })} />
                             {loginErrors.email?.message && <p className="p text-meta-7 shadow-0">{loginErrors.email?.message}</p>}
-                            <input type="password" placeholder="Password" className="input" {...loginRegister("password", {
+                            <input type="password" placeholder="Contraseña" className="input" {...loginRegister("password", {
                                 required: {
                                     value: true,
-                                    message: "El password es requerido."
+                                    message: "La contraseña es requerida."
                                 },
                                 pattern: {
                                     value: /^.{7,}$/,
@@ -413,7 +413,7 @@ const LoginAndRegisterForm = () => {
                             {/* <div className="passLink">
                                 <a href="#" className="a">Forgot password?</a>
                             </div> */}
-                            <button className="button" disabled={!loginIsDirty || !loginIsValid || loginIsSubmitting} type="submit">Login</button>
+                            <button className="button" disabled={!loginIsDirty || !loginIsValid || loginIsSubmitting} type="submit">Ingresar</button>
                             {/* <span className="span">or use your account</span>
                         <div className="socialContainer">
                             <a href="#" className="social a"><FcGoogle className="socialIcon" /></a>
@@ -424,14 +424,14 @@ const LoginAndRegisterForm = () => {
                     <div className="overlayContainer">
                         <div className="overlay">
                             <div className="overlayPanel overlayLeft">
-                                <h1 className="title">Hello!!</h1>
-                                <p className="p">If you have an account, login here</p>
-                                <button className="button ghost" id="login" onClick={onLogin}>Login <BsFillArrowLeftCircleFill className="socialIcon" /></button>
+                                <h1 className="title">Hola!!</h1>
+                                <p className="p">Si tienes una cuenta, ingresa aqui</p>
+                                <button className="button ghost" id="login" onClick={onLogin}>Ingresar <BsFillArrowLeftCircleFill className="socialIcon" /></button>
                             </div>
                             <div className="overlayPanel overlayRight">
-                                <h1 className="title">Start selling now</h1>
-                                <p className="p">If you do not have an account yet, join us and start selling. </p>
-                                <button className="button ghost" onClick={onRegister} id="register">Register <BsFillArrowRightCircleFill className="socialIcon" /></button>
+                                <h1 className="title">Comienza a vender ahora!</h1>
+                                <p className="p">Si no tienes una cuenta, regístrate y comienza a vender!</p>
+                                <button className="button ghost" onClick={onRegister} id="register">Registro <BsFillArrowRightCircleFill className="socialIcon" /></button>
                             </div>
                         </div>
                     </div>

@@ -9,24 +9,10 @@ import { clearCurrentProductID } from "../../store/reducers/userReducer";
 import { Categorie, Products } from "../../types";
 import { REACT_APP_SERVER_URL } from '../../../config'
 
-// export type formValues = {
-//     name: string,
-//     category?: string,
-//     freeShipping: boolean,
-//     description: string,
-//     price: number,
-//     stock: number,
-//     photos?: [[
-//         {
-//             url: '',
-//             public_id: '',
-//         },
-//     ],]
-// }
-
 let images: FileList
 
 const FormUpdateProduct = () => {
+
     const currentProductID = useAppSelector((state: RootState) => state.user.currentProductID)
     const currentProductbyID = useAppSelector((state: RootState) => state.user.currentProductbyID)
     const categories = useAppSelector((state: RootState) => state.user.categories)
@@ -37,20 +23,11 @@ const FormUpdateProduct = () => {
     // products reducer
     const currentUser = useAppSelector((state: RootState) => state.user.userData)
 
-
     // modal Update Product is active?
     const updateProductModal = useAppSelector((state: RootState) => state.modals.updateProductModal)
 
     // control form Post Product
     const form = useForm<Products>({
-        // defaultValues: async () => {
-        //     if (currentProductID) {
-        //         
-        //         const response = await axios.get(`${REACT_APP_SERVER_URL}/products/detail/${currentProductID}`)
-        //         
-        //         return response.data
-        //     } 
-        // },
         mode: "all",
     });
 
@@ -79,10 +56,9 @@ const FormUpdateProduct = () => {
 
 
     // handling images files 
-
-    let formData = new FormData();
-
     const onChangeImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log('hago algo')
+        console.log(e.target.files)
         if (e.target.files) {
             images = e.target.files
         }
@@ -91,19 +67,19 @@ const FormUpdateProduct = () => {
 
     // Update product
     const uploadUpdatedProduct = async (data: Products) => {
-        // let formData = new FormData();
+        let formData = new FormData();
 
-
-        // formData.append('data', JSON.stringify(currentUpdatedProduct))
-        // if (images.length) {
-        //     for (let i = 0; i < images.length; i++) {
-        //         formData.append('photos', images[i])
-        //     }
-        // }
-
+        formData.append('data', JSON.stringify(currentUpdatedProduct))
+        if(images){
+            if (images.length) {
+                for (let i = 0; i < images.length; i++) {
+                    formData.append('photos', images[i])
+                }
+            }
+        }
         return await axios.put(
-            `${REACT_APP_SERVER_URL}/products/`,
-            currentUpdatedProduct
+            `${REACT_APP_SERVER_URL}/products`,
+            formData
         );
     }
 
@@ -127,7 +103,7 @@ const FormUpdateProduct = () => {
 
                     dispatch(activeToast({
                         isOk: false,
-                        message: `Ocurrio un problema. ${error?.response?.data}`
+                        message: `Ocurrio un problema. ${error}`
                     }))
                 })
                 reset()
@@ -156,27 +132,6 @@ const FormUpdateProduct = () => {
                                                 value: /^[A-Za-z0-9\s]+$/,
                                                 message: "El nombre es invalido."
                                             },
-                                            validate: {
-                                                // nameAlreadyExist: async (fieldValue) => {
-                                                //     const response = await axios.post(
-                                                //         '${REACT_APP_SERVER_URL}/products?page=1',
-                                                //         {
-                                                //             price: { isSorted: true, order: 'desc' },
-                                                //             relevant: { isSorted: false, order: 'asc' },
-                                                //         }
-                                                //     );
-
-                                                //     // Si ya existe un producto con ese nombre
-                                                //     let alreadyExistProduct = false;
-                                                //     if (response.data.products?.find((product: Products) => (product.name.toLowerCase() == fieldValue.toLowerCase()))) {
-                                                //         alreadyExistProduct = false;
-                                                //     } else {
-                                                //         alreadyExistProduct = true;
-                                                //     }
-
-                                                //     return alreadyExistProduct || "Ya existe un producto con ese nombre."
-                                                // }
-                                            },
                                         })} id="nameProduct" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full" placeholder="nombre del producto" />
                                     </div>
                                     <p className="text-xs">{errors.name?.message}</p>
@@ -194,9 +149,32 @@ const FormUpdateProduct = () => {
                                     </select>
                                 </div>
                             </div>
-                            <div className="sm:col-span-2 flex row-span-1 justify-center items-center">
+                            <div className="sm:col-span-2 flex row-span-3 justify-center items-center">
                                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Envio Gratis</label>
-                                <input type="checkbox" {...register("freeShipping")} id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="categoria" />
+                                <input type="checkbox" {...register("freeShipping")} id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                            </div>
+                            <div className="sm:col-span-2 flex row-span-1 justify-center items-center">
+                                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Descuento</label>
+                                <input type="checkbox" {...register("hasDiscount")} id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                            </div>
+                            <div className="sm:col-span-2">
+                                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">% Descuento</label>
+                                <div className="mt-2">
+                                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+                                        <input type="text" {...register("discount", {
+                                            required: {
+                                                value: true,
+                                                message: "El descuento es requerido."
+                                            },
+                                            validate: {
+                                                isNumber: (fieldValue) => {
+                                                    return (!isNaN(Number(fieldValue)) && Number(fieldValue) > 0) || "La cantidad es invalida."
+                                                }
+                                            }
+                                        })} id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full" placeholder="cantidad" />
+                                    </div>
+                                    <p className="text-xs">{errors.stock?.message}</p>
+                                </div>
                             </div>
                             <div className="sm:col-span-4">
                                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Precio</label>
@@ -260,13 +238,11 @@ const FormUpdateProduct = () => {
                                             <path fillRule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clipRule="evenodd" />
                                         </svg>
                                         <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                                            <label htmlFor="file-upload" className={`relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}>
+                                            <label htmlFor="file-upload-update" className='relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'>
                                                 <span>Upload a file</span>
-                                                <input id="file-upload" {...register("photos")} onChange={(onChangeImages)} type="file" className="sr-only" multiple />
+                                                <input id="file-upload-update" className="sr-only" onChange={(onChangeImages)} type="file"  multiple />
                                             </label>
-                                            <p className="pl-1">or drag and drop</p>
                                         </div>
-                                        <p className="text-xs leading-5 text-gray-600">PNG, JPG up to 10MB</p>
                                     </div>
                                 </div>
                             </div>
@@ -276,8 +252,7 @@ const FormUpdateProduct = () => {
 
                 <div className="flex items-center justify-end gap-x-4">
                     <button type="button" onClick={handleHiddenPostProductModal} className="text-sm font-semibold  text-gray-900 px-3 py-2 rounded-md bg-meta-7 text-white">Cancel</button>
-                    <button type="submit" onClick={() => {
-                    }} disabled={!isDirty || !isValid || isSubmitting} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting) ? "bg-bodydark" : "bg-meta-3"}`}>Update</button>
+                    <button type="submit" disabled={!isDirty || !isValid || isSubmitting} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting) ? "bg-bodydark" : "bg-meta-3"}`}>Update</button>
                 </div>
             </form>
             <DevTool control={control} />

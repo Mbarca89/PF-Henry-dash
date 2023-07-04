@@ -9,7 +9,7 @@ import FormPostProduct from "./Form/FormPostProduct"
 import FormUpdateProduct from "./Form/FormUpdateProduct"
 import { useEffect } from 'react';
 import { clearStateToast } from '../store/reducers/modalReducer';
-import { getProducts, getAllProducts } from '../store/thunks';
+import { getProducts, getAllProducts, getAllCategories } from '../store/thunks';
 import TableFive from '../components/TableFive';
 
 const Products = () => {
@@ -41,6 +41,8 @@ const Products = () => {
         }
       }
     } else {
+      
+      dispatch(getAllCategories())
       dispatch(getProducts(currentUser.id))
       if (toastModal.isActive) {
         if (toastModal.type == "success") {  
@@ -82,11 +84,6 @@ const Products = () => {
           <FormUpdateProduct />
         </ModalPostProduct>
       </div>
-      {/* <div className={postAddOtherProductModalisActive ? "block" : "hidden"}>
-        <ModalPostOtherProduct>
-          <DecideAddOtherProductAbout />
-        </ModalPostOtherProduct>
-      </div> */}
       <DefaultLayout>
         <Breadcrumb pageName="Productos" />
         <div className="flex flex-col gap-10 relative">

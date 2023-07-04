@@ -6,7 +6,7 @@ import { activeToast, hiddenPostProductModal, hiddenUpdateProductModal } from ".
 import axios from "axios";
 import { getProducts } from "../../store/thunks";
 import { clearCurrentProductID } from "../../store/reducers/userReducer";
-import { Products } from "../../types";
+import { Categorie, Products } from "../../types";
 import { REACT_APP_SERVER_URL } from '../../../config'
 
 // export type formValues = {
@@ -29,6 +29,7 @@ let images: FileList
 const FormUpdateProduct = () => {
     const currentProductID = useAppSelector((state: RootState) => state.user.currentProductID)
     const currentProductbyID = useAppSelector((state: RootState) => state.user.currentProductbyID)
+    const categories = useAppSelector((state: RootState) => state.user.categories)
 
     const dispatch = useAppDispatch();
     const activeDrop = useState(false)
@@ -184,9 +185,13 @@ const FormUpdateProduct = () => {
                             <div className="sm:col-span-4">
                                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Categoria</label>
                                 <div className="mt-2">
-                                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                        <input type="text" {...register("category")} id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full" placeholder="categoria" />
-                                    </div>
+                                    <select {...register("category")}>
+                                        {
+                                            categories.map((category: Categorie) => {
+                                                return <option key={category.id} value={category.id}>{category.categoryName}</option>
+                                            })
+                                        }
+                                    </select>
                                 </div>
                             </div>
                             <div className="sm:col-span-2 flex row-span-1 justify-center items-center">

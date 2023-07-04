@@ -94,8 +94,6 @@ export const getAllCategories = createAsyncThunk(
     //     price: { isSorted: true, order: 'desc' },
     //     relevant: { isSorted: false, order: 'asc' },
     //   }
-    // );
-
     const response = await axios.get(
       `${REACT_APP_SERVER_URL}/categories`,
     );

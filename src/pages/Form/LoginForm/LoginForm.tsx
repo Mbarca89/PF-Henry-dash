@@ -406,13 +406,13 @@ const LoginAndRegisterForm = () => {
                                 },
                             })} />
                             {loginErrors.password?.message && <p className="p text-meta-7 shadow-0">{loginErrors.password?.message}</p>}
-                            <div className="content">
+                            {/* <div className="content">
                                 <input type="checkbox" name="checkbox" id="checkbox" className="input checkbox" />
                                 <label>Remember me</label>
-                            </div>
-                            <div className="passLink">
+                            </div> */}
+                            {/* <div className="passLink">
                                 <a href="#" className="a">Forgot password?</a>
-                            </div>
+                            </div> */}
                             <button className="button" disabled={!loginIsDirty || !loginIsValid || loginIsSubmitting} type="submit">Login</button>
                             {/* <span className="span">or use your account</span>
                         <div className="socialContainer">

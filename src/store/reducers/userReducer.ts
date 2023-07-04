@@ -115,11 +115,15 @@ export const counterSlice = createSlice({
     });
 
     builder.addCase(getProducts.fulfilled, (state, action) => {
-      state.products = action.payload;
+      if(action.payload.length !== 0){
+        state.products = action.payload;
+      }  
     });
 
     builder.addCase(getAllProducts.fulfilled, (state, action) => {
-      state.products = action.payload;
+      if(action.payload.length !== 0){
+        state.products = action.payload;
+      }  
     });
 
     builder.addCase(getProductByID.fulfilled, (state, action) => {
@@ -131,7 +135,7 @@ export const counterSlice = createSlice({
     });
 
     builder.addCase(getAllCategories.fulfilled, (state, action) => {
-      state.categories = action.payload;
+      state.categories = [...action.payload];
     });
 
     // builder.addCase(postProduct.fulfilled, (state, action: PayloadAction<formValues>) => {

@@ -149,6 +149,9 @@ export const modalSlice = createSlice({
       state.imagesViewsModal.isActive = false;
       state.imagesViewsModal.imagegUrls = []
     },
+    // aadImageProductToImageViewsModal: (state, action: string) => {
+    //   state.imagesViewsModal.imagegUrls.push(action.payload)
+    // },
 
     activeToast: (
       state,

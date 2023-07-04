@@ -4,6 +4,7 @@ import { getAllCategories, getAllProducts, getProductByID, getProducts, logicDel
 import { activePostProductModal, activeUpdateProductModal, clearStateToast } from '../store/reducers/modalReducer';
 import { setCurrentProductID } from '../store/reducers/userReducer';
 import { BsFillFileArrowDownFill, BsFillFileArrowUpFill, BsFillTrashFill } from "react-icons/bs"
+import { AiFillCloseCircle } from "react-icons/ai"
 import { Products } from '../types';
 import axios from 'axios';
 import { REACT_APP_SERVER_URL } from '../../config';
@@ -73,7 +74,7 @@ const TableTwo = () => {
       console.log(error)
     }
   }
-  
+
   const closeGallery = () => {
     setGallery(false)
     setPhotos([])
@@ -203,22 +204,26 @@ const TableTwo = () => {
           )
         })
       }
-      {gallery && <div className="w-full h-100 fixed bg-transparent flex justify-center z-99999 top-36">
-        <div className='w-100 h-full absolute bg-boxdark flex flex-col z-99999 left-70'>
-          <div className="flex justify-center gap-x-4">
-            <p className="text-sm text-white dark:text-white">Imagenes del producto</p>
-            <p onClick={closeGallery} className="absolute top-1 right-1 cursor-pointer text-sm text-white dark:text-white">X</p>
-          </div>
-          <div className='grid grid-cols-3 mt-10' >
-          {photos.map((photo: any,index) => {
-            return <div>
-              <p className='cursor-pointer w-5'>X</p>
-              <img src={photo.url} className='w-30'></img>
-              </div>
-          })}
+      {gallery &&
+        <div className="w-full h-full absolute flex justify-center z-99999 top-3 p-3 bg-transparent ">
+          <div className='w-100 h-full bg-bodydark2 flex flex-col  p-10 text-black font-bold rounded-3xl'>
+            <div className="flex justify-center gap-x-4">
+              <p className="text-sm text-white">Imagenes del producto</p>
+              <p onClick={closeGallery} className="top-5 right-1 cursor-pointer text-sm absolute left-[720px] text-white font-bold"><AiFillCloseCircle size={30}/></p>
+            </div>
+            <div className='grid grid-cols-3 mt-10 gap-5' >
+              {photos.map((photo: any, index) => {
+                return (
+                  <div key={crypto.randomUUID()} className='bg-white rounded-xl relative'>
+                    <p className='cursor-pointer w-5 absolute right-1 text-danger'><AiFillCloseCircle size={20}/></p>
+                    <img src={photo.url} className='w-auto h-auto'></img>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
-      </div>}
+      }
     </div>
   );
 };

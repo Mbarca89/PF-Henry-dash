@@ -13,7 +13,8 @@ export interface User {
     purchasedProducts?: any[];
     cart:              string;
     id:                string;
-    active:            boolean
+    active:            boolean;
+    banned:            boolean;
 }
 
 //Users

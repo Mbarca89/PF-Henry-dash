@@ -42,7 +42,8 @@ const TableFour = () => {
         role: '',
         cart: '',
         id: '',
-        active: false
+        active: false,
+        banned:false
       }
     })
     setAux(!aux)
@@ -68,7 +69,8 @@ const TableFour = () => {
         role: '',
         cart: '',
         id: '',
-        active: false
+        active: false,
+        banned:false,
       }
     })
   }
@@ -115,7 +117,7 @@ const TableFour = () => {
               <div className="col-span-1 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   {
-                    user.active ? (
+                    !user.banned ? (
                       <p className="text-sm text-black dark:text-white hover:underline hover:cursor-pointer" >
                         {user.name}
                       </p>
@@ -129,7 +131,7 @@ const TableFour = () => {
               </div>
               <div className="col-span-2 items-center hidden md:block">
                 {
-                  user.active ? (
+                  !user.banned ? (
                     <p className="text-sm text-black dark:text-white">{user.email}</p>
                   ) : (
                     <p>
@@ -141,7 +143,7 @@ const TableFour = () => {
               </div>
               <div className="col-span-1 flex items-center">
                 {
-                  user.active ? (
+                  !user.banned ? (
                     <p className="text-sm text-black dark:text-white">{user.role}</p>
                   ) : (
                     <p>
@@ -152,7 +154,7 @@ const TableFour = () => {
               </div>
               <div className="col-span-1 flex items-center" >
                 {
-                  user.active ? (
+                  !user.banned ? (
 
                     <p className="text-sm text-meta-3" >Activo</p>
                   ) : (
@@ -163,7 +165,7 @@ const TableFour = () => {
               </div>
               <div className="col-span-1 flex items-center" >
                 {
-                  user.active ? (
+                  !user.banned ? (
 
                     <p className="text-sm text-danger cursor-pointer" onClick={() => showConfirmation(user)}><BsFillFileArrowDownFill /></p>
                   ) : (

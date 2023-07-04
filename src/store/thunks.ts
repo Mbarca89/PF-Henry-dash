@@ -118,7 +118,7 @@ export const changeUserActivation = createAsyncThunk(
     const response = await axios.put(
       `${REACT_APP_SERVER_URL}/users/changeactivation/${user.id}`,
       {
-        active: user.active ? false : true
+        active: user.banned ? false : true
       }
     );
     return response.data;

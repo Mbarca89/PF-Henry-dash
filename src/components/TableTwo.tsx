@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../store';
 import { getAllCategories, getAllProducts, getProductByID, getProducts, logicDeleteProductByID } from '../store/thunks';
-import { activePostProductModal, activeUpdateProductModal, clearStateToast } from '../store/reducers/modalReducer';
+import { activePostProductModal, activeToast, activeUpdateProductModal, clearStateToast } from '../store/reducers/modalReducer';
 import { setCurrentProductID } from '../store/reducers/userReducer';
 import { BsFillFileArrowDownFill, BsFillFileArrowUpFill, BsFillTrashFill } from "react-icons/bs"
 import { AiFillCloseCircle } from "react-icons/ai"
 import { Products } from '../types';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { REACT_APP_SERVER_URL } from '../../config';
 import { isAborted } from 'zod';
 
@@ -84,22 +84,22 @@ const TableTwo = () => {
 
   const closeGallery = () => {
     setGallery({
-      show:false,
-      product:{
-        name:'',
-        price:0,
-        description:'',
+      show: false,
+      product: {
+        name: '',
+        price: 0,
+        description: '',
         category: '',
         id: '',
-        photos:[],
-        stock:0,
+        photos: [],
+        stock: 0,
         hasDiscount: false,
         discount: 0,
         freeShipping: false,
-        sales:0,
-        rating:0,
-        reviews:[],
-        seller: {id:'', name:''},
+        sales: 0,
+        rating: 0,
+        reviews: [],
+        seller: { id: '', name: '' },
         isActive: true,
         ratingAverage: 0
       }
@@ -107,12 +107,21 @@ const TableTwo = () => {
     setPhotos([])
   }
 
-  const deletePhoto = async (index:number) => {
+  const deletePhoto = async (index: number) => {
     try {
-      const {data} = await axios.delete(`${REACT_APP_SERVER_URL}/products/photos/${gallery.product.id}?index=${index}`)
+      const { data } = await axios.delete(`${REACT_APP_SERVER_URL}/products/photos/${gallery.product.id}?index=${index}`)
+
       setPhotos(data)
-    } catch (error) {
-      console.log(error)
+      dispatch(activeToast({
+        isOk: true,
+        message: "Imagen agregada correctamente."
+      }))
+    } catch (error: any) {
+      // console.log(error)
+      dispatch(activeToast({
+        isOk: false,
+        message: `${error.response.data}`
+      }))
     }
   }
 
@@ -243,9 +252,9 @@ const TableTwo = () => {
       {gallery.show &&
         <div className="w-full h-full absolute flex justify-center z-99999 top-3 p-3 bg-transparent ">
           <div className='w-100 h-full bg-bodydark2 flex flex-col  p-10 text-black font-bold rounded-3xl'>
-            <div className="flex justify-center gap-x-4">
+            <div className="flex justify-center gap-x-4 relative">
               <p className="text-sm text-white">Imagenes del producto</p>
-              <p onClick={closeGallery} className="top-5 right-1 cursor-pointer text-sm absolute left-[650px] text-white font-bold"><AiFillCloseCircle size={30} /></p>
+              <p onClick={closeGallery} className="-top-5 -right-5 cursor-pointer text-sm absolute text-white font-bold"><AiFillCloseCircle size={30} /></p>
             </div>
             <div className='grid grid-cols-3 mt-10 gap-5' >
               {photos.map((photo: any, index) => {

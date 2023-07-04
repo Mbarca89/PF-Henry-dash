@@ -93,7 +93,7 @@ const TableTwo = () => {
       </div>
       <div
         onClick={handleActivePostProductModal}
-        className="absolute cursor-pointer right-2 top-2 rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+        className="absolute cursor-pointer right-2 top-2 rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 z-9999"
       >
         <button onClick={handleStateToast}>
           Agregar Producto
@@ -122,7 +122,7 @@ const TableTwo = () => {
             <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5" key={crypto.randomUUID()}>
               <div className="col-span-2 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <div className="h-12.5 w-15 rounded-md">
+                  <div className="h-12.5 w-15 rounded-md cursor-pointer">
                     <img src={product?.photos[0]?.url} alt="Product" onClick={() => showGallery(product)} />
                   </div>
                   {
@@ -209,13 +209,13 @@ const TableTwo = () => {
           <div className='w-100 h-full bg-bodydark2 flex flex-col  p-10 text-black font-bold rounded-3xl'>
             <div className="flex justify-center gap-x-4">
               <p className="text-sm text-white">Imagenes del producto</p>
-              <p onClick={closeGallery} className="top-5 right-1 cursor-pointer text-sm absolute left-[720px] text-white font-bold"><AiFillCloseCircle size={30}/></p>
+              <p onClick={closeGallery} className="top-5 right-1 cursor-pointer text-sm absolute left-[720px] text-white font-bold"><AiFillCloseCircle size={30} /></p>
             </div>
             <div className='grid grid-cols-3 mt-10 gap-5' >
               {photos.map((photo: any, index) => {
                 return (
                   <div key={crypto.randomUUID()} className='bg-white rounded-xl relative'>
-                    <p className='cursor-pointer w-5 absolute right-1 text-danger'><AiFillCloseCircle size={20}/></p>
+                    <p className='cursor-pointer w-5 absolute right-1 text-danger'><AiFillCloseCircle size={20} /></p>
                     <img src={photo.url} className='w-auto h-auto'></img>
                   </div>
                 )

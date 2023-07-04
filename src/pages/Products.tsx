@@ -15,6 +15,7 @@ import TableFive from '../components/TableFive';
 const Products = () => {
   const postProductModalisActive = useAppSelector((state: RootState) => state.modals.postProductModalisActive)
   const updateProductModal = useAppSelector((state: RootState) => state.modals.updateProductModal)
+  const imagesViewsModal = useAppSelector((state: RootState) => state.modals.imagesViewsModal)
   const toastModal = useAppSelector((state: RootState) => state.modals.toastModal)
   const currentUser = useAppSelector((state: RootState) => state.user.userData)
   const dispatch = useAppDispatch()
@@ -89,11 +90,13 @@ const Products = () => {
       </div>
 
       {/* FORM IMAGES VIEWS MODAL */}
-      <div className={postProductModalisActive ? "block" : "hidden"}>
+      <div className={imagesViewsModal.isActive ? "block" : "hidden"}>
         <ModalImagesViews>
           {/* MODAL QUE QUIERES MOSTRAR */}
         </ModalImagesViews>
       </div>
+
+      
       <DefaultLayout>
         <Breadcrumb pageName="Productos" />
         <div className="flex flex-col gap-10 relative">

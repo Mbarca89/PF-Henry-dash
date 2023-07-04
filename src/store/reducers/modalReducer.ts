@@ -17,11 +17,11 @@ export interface modelState {
     isActive: boolean;
     values: valuesUpdateProduct;
   };
-
   activeUpdateCategoryModal: {
     isActive: boolean;
     values: valuesUpdateProduct;
   };
+
   valuesPostModalProducts: {
     name?: string;
     category?: string;
@@ -30,11 +30,17 @@ export interface modelState {
     price?: number;
     stock?: number;
   };
+
   toastModal: {
     isActive: boolean;
     message: string;
     type: string;
   };
+
+  imagesViewsModal: {
+    isActive: boolean,
+    imagegUrls: []
+  }
 }
 
 const initialState: modelState = {
@@ -77,6 +83,11 @@ const initialState: modelState = {
     message: '',
     type: '',
   },
+
+  imagesViewsModal: {
+    isActive: false,
+    imagegUrls: []
+  }
 };
 
 export const modalSlice = createSlice({
@@ -89,11 +100,6 @@ export const modalSlice = createSlice({
     hiddenPostProductModal: (state) => {
       state.postProductModalisActive = false;
     },
-
-
-
-
-
     activeUpdateProductModal: (
       state,
       action: PayloadAction<{ isActive: boolean; values?: valuesUpdateProduct }>
@@ -134,6 +140,14 @@ export const modalSlice = createSlice({
         price: 0,
         stock: 0,
       };
+    },
+
+    activeImagesViewsModal: (state) => {
+      state.imagesViewsModal.isActive = true;
+    },
+    hiddenImagesViewsModal: (state) => {
+      state.imagesViewsModal.isActive = false;
+      state.imagesViewsModal.imagegUrls = []
     },
 
     activeToast: (

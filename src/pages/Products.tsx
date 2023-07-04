@@ -1,5 +1,5 @@
 import Breadcrumb from '../components/Breadcrumb';
-import { ModalUpdateProduct, ModalPostProduct } from '../components/Modals';
+import { ModalUpdateProduct, ModalPostProduct, ModalImagesViews } from '../components/Modals';
 import { Toaster, toast } from "react-hot-toast";
 import TableOne from '../components/TableOne';
 import TableTwo from '../components/TableTwo';
@@ -74,15 +74,25 @@ const Products = () => {
           }
         }
       } />}
+      {/* FORM POST PRODUCT MODAL */}
       <div className={postProductModalisActive ? "block" : "hidden"}>
         <ModalPostProduct>
           <FormPostProduct />
         </ModalPostProduct>
       </div>
+
+      {/* FORM UPDATE PRODUCT MODAL */}
       <div className={updateProductModal.isActive ? "block" : "hidden"}>
         <ModalPostProduct>
           <FormUpdateProduct />
         </ModalPostProduct>
+      </div>
+
+      {/* FORM IMAGES VIEWS MODAL */}
+      <div className={postProductModalisActive ? "block" : "hidden"}>
+        <ModalImagesViews>
+          {/* MODAL QUE QUIERES MOSTRAR */}
+        </ModalImagesViews>
       </div>
       <DefaultLayout>
         <Breadcrumb pageName="Productos" />

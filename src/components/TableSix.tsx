@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../store';
 import { getAllCategories, getProductByID, getAllProducts, logicDeleteProductByID } from '../store/thunks';
-import { activeUpdateProductModal } from '../store/reducers/modalReducer';
+import { activeToast, activeUpdateProductModal } from '../store/reducers/modalReducer';
 import { setCurrentProductID } from '../store/reducers/userReducer';
 import { BsFillFileArrowDownFill, BsFillFileArrowUpFill } from "react-icons/bs"
 import axios from 'axios';
 import { REACT_APP_SERVER_URL } from '../../config'
 
 const TableSix = () => {
+
+  const dispatch = useAppDispatch()
 
   const currentUser = useAppSelector((state: RootState) => state.user.userData)
   const [loading, setLoading] = useState<boolean>(true);
@@ -38,8 +40,11 @@ const TableSix = () => {
       try {
         const { data } = await axios(`${REACT_APP_SERVER_URL}/users/clients/${currentUser.id}`)
         setClients(data)
-      } catch (error) {
-        console.log(error)
+      } catch (error:any) {
+        dispatch(activeToast({
+          isOk: false,
+          message: `Ocurrio un problema. ${error?.response?.data}`
+      }))
       }
     }
     getClients()

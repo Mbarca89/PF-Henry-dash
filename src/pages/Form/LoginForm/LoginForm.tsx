@@ -253,18 +253,18 @@ const LoginAndRegisterForm = () => {
                                             /^[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}$/,
                                         message: '*',
                                     },
-                                    validate: {
-                                        isExist: async (fieldValue) => {
-                                            const response = await axios.get(`${REACT_APP_SERVER_URL}/users`)
-                                            let alreadyExistEmail = false;
-                                            if (response.data.find((user: User) => user.email.toLowerCase() === fieldValue.toLowerCase())) {
-                                                alreadyExistEmail = false;
-                                            } else {
-                                                alreadyExistEmail = true;
-                                            }
-                                            return alreadyExistEmail || "*"
-                                        }
-                                    },
+                                    // validate: {
+                                    //     isExist: async (fieldValue) => {
+                                    //         const response = await axios.get(`${REACT_APP_SERVER_URL}/users`)
+                                    //         let alreadyExistEmail = false;
+                                    //         if (response.data.find((user: User) => user.email.toLowerCase() === fieldValue.toLowerCase())) {
+                                    //             alreadyExistEmail = false;
+                                    //         } else {
+                                    //             alreadyExistEmail = true;
+                                    //         }
+                                    //         return alreadyExistEmail || "*"
+                                    //     }
+                                    // },
                                 })} />
                             </div>
                             <div>

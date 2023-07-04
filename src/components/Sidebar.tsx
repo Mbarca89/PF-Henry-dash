@@ -357,7 +357,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Forms --> */}
 
               {/* <!-- Menu Item Products --> */}
-              {user.role === 'admin' && <li>
+              <li>
                 <NavLink
                   to="/products"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('tables') && 'bg-graydark dark:bg-meta-4'
@@ -391,10 +391,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Productos
                 </NavLink>
               </li>
-              }
               {/* <!-- Menu Item Products --> */}
               {/* <!-- Menu Item Category --> */}
-              <li>
+              {user.role === 'admin' && <li>
                 <NavLink
                   to="/category"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('tables') && 'bg-graydark dark:bg-meta-4'
@@ -428,6 +427,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Categorías
                 </NavLink>
               </li>
+}
               {/* <!-- Menu Item Category --> */}
               {/* <!-- Menu Item Profile --> */}
               {/* <li>

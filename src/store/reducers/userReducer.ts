@@ -28,7 +28,8 @@ const initialState: userState = {
     role: '',
     cart: '',
     id: '',
-    active: false
+    active: false,
+    banned: false
   },
   products: [
     {

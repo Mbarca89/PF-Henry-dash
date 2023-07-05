@@ -106,8 +106,9 @@ const ChartOne: React.FC = () => {
     yaxis: {
       title: {
         style: {
-          fontSize: '0px',
+          fontSize: '20px',
         },
+        text: '$ARS',
       },
       min: 0,
       max: 100,

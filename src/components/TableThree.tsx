@@ -116,11 +116,11 @@ const TableFour = () => {
       </div> */}
 
       <div onClick={handleActiveUpdateCategoryModal} className="absolute right-48 top-2 cursor-pointer rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-5">
-        <button>Modify Category</button>
+        <button>Modificar Categoría</button>
       </div>
       <div
         onClick={handleActivePostProductModal} className="absolute right-2 top-2 cursor-pointer rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-5">
-        <button>Add Category</button>
+        <button>Agregar Categoría</button>
       </div>
 
       {categories?.map((category) => {
@@ -135,7 +135,7 @@ const TableFour = () => {
                   <img src={category?.photos[0]?.url} alt="Product" />
                 </div> */}
                 <p
-                  className="text-sm text-black hover:underline dark:text-white"
+                  className="text-sm text-black dark:text-white cursor-default"
                 >
                   {category.categoryName}
                 </p>

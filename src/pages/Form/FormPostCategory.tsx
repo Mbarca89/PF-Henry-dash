@@ -9,6 +9,9 @@ import {
 import axios from 'axios';
 import { getProducts } from '../../store/thunks';
 import { REACT_APP_SERVER_URL } from '../../../config';
+import { getCategories } from '../../store/thunks';
+import { fetchCategoriesSuccess } from '../../store/reducers/categoriesReducer';
+
 
 export type formValues = {
   name: string;
@@ -29,6 +32,7 @@ const FormPostCategory = () => {
   // products reducer
   const products = useAppSelector((state: RootState) => state.user.products);
   const currentUser = useAppSelector((state: RootState) => state.user.userData);
+  const [aux,setAux] = useState(false)
 
   // control form Post Product
   const form = useForm<formValues>({
@@ -117,7 +121,7 @@ const FormPostCategory = () => {
 
         setTimeout(() => {
           // Refresh the page
-          window.location.reload();
+          setAux(!aux)
         }, 800);
       }
 
@@ -149,7 +153,6 @@ const FormPostCategory = () => {
     if (e.target.files) {
       images = e.target.files;
     }
-    console.log(images);
   };
 
   // Post product
@@ -199,6 +202,18 @@ const FormPostCategory = () => {
     }
   }, [isSubmitSuccessful, reset]);
  */
+
+  useEffect(() => {
+    dispatch(getCategories())
+      .then((response) => {
+        dispatch(fetchCategoriesSuccess(response.payload)); // Dispatch the fetchCategoriesSuccess action with the payload data
+      })
+      .catch((error) => {
+        console.log('Error fetching categories:', error);
+      });
+  }, [dispatch,aux]);
+
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>

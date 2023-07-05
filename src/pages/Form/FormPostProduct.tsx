@@ -99,10 +99,11 @@ const FormPostProduct = () => {
     }
 
     useEffect(() => {
+        const upload = async () => {
         if (isSubmitted) {
             if (isSubmitSuccessful) {
                 setUploading(true)
-                postProduct(currentPostProduct as formValues).then(response => {
+                await postProduct(currentPostProduct as formValues).then(response => {
                     dispatch(activeToast({
                         isOk: true,
                         message: `El producto ${response?.data?.name} fue creado exitosamente`
@@ -125,7 +126,8 @@ const FormPostProduct = () => {
                 reset()
             }
         }
-
+    }
+    upload()
     }, [isSubmitSuccessful, reset])
 
 

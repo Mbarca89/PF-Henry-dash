@@ -98,7 +98,7 @@ const Products = () => {
 
       
       <DefaultLayout>
-        <Breadcrumb pageName="Productos" />
+        <Breadcrumb pageName="Mis productos" />
         <div className="flex flex-col gap-10 relative">
           {currentUser.role === 'seller' ? <TableTwo /> : <TableFive/>}
           {/* <TableOne />

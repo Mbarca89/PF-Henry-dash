@@ -215,14 +215,14 @@ const TableTwo = () => {
     ></div>
   ) : (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="py-6 px-4 md:px-6 xl:px-7.5">
+      <div className="py-6 px-4 md:px-6 xl:px-7.5 h-20">
         <h4 className="text-xl font-semibold text-black dark:text-white">
-          Mis Productos
+         
         </h4>
       </div>
       <div
         onClick={handleActivePostProductModal}
-        className="absolute cursor-pointer right-2 top-2 rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 z-9999"
+        className="absolute cursor-pointer right-2 top-2 rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
       >
         <button onClick={handleStateToast}>
           Agregar Producto
@@ -252,7 +252,7 @@ const TableTwo = () => {
               <div className="col-span-2 flex items-center">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <div className="h-12.5 w-15 rounded-md cursor-pointer">
-                    <img src={product?.photos[0]?.url} alt="Product" onClick={() => showGallery(product)} />
+                    <img src={product?.photos[0]?.url} alt="Product" className='h-15 w-15' onClick={() => showGallery(product)} />
                   </div>
                   {
                     product.isActive ? (

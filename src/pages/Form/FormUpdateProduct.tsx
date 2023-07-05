@@ -125,7 +125,7 @@ const FormUpdateProduct = () => {
                                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                         <input type="text" {...register("name", {
                                             required: {
-                                                value: true,
+                                                value: false,
                                                 message: "El nombre es requerido."
                                             },
                                             pattern: {
@@ -155,7 +155,7 @@ const FormUpdateProduct = () => {
                                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                         <input type="text" {...register("price", {
                                             required: {
-                                                value: true,
+                                                value: false,
                                                 message: "El precio es requerido."
                                             },
                                             validate: {
@@ -174,7 +174,7 @@ const FormUpdateProduct = () => {
                                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
                                         <input type="text" {...register("stock", {
                                             required: {
-                                                value: true,
+                                                value: false,
                                                 message: "La cantidad es requerida."
                                             },
                                             validate: {
@@ -201,7 +201,7 @@ const FormUpdateProduct = () => {
                                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
                                         <input type="text" {...register("discount", {
                                             required: {
-                                                value: true,
+                                                value: false,
                                                 message: "El descuento es requerido."
                                             },
                                             validate: {
@@ -219,7 +219,7 @@ const FormUpdateProduct = () => {
                                 <div className="mt-2">
                                     <textarea id="about" {...register("description", {
                                         required: {
-                                            value: true,
+                                            value: false,
                                             message: "La descripcion es requerida."
                                         },
                                         pattern: {

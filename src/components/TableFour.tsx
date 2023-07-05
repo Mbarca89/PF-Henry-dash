@@ -144,10 +144,14 @@ const TableFour = () => {
               <div className="col-span-1 flex items-center">
                 {
                   !user.banned ? (
-                    <p className="text-sm text-black dark:text-white">{user.role === 'seller' ? 'Vendedor' : 'Administrador'}</p>
+                    <p className="text-sm text-black dark:text-white">{user.role === 'seller' && 'Vendedor'}
+                    {user.role === 'admin' && 'Administrador'}
+                    {user.role === 'cliente' && 'Cliente'}</p>
                   ) : (
                     <p>
-                      {user.role === 'seller' ? 'Vendedor' : 'Administrador'}
+                      {user.role === 'seller' && 'Vendedor'}
+                      {user.role === 'admin' && 'Administrador'}
+                      {user.role === 'cliente' && 'Cliente'}
                     </p>
                   )
                 }

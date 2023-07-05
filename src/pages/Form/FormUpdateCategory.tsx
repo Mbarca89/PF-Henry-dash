@@ -274,13 +274,10 @@ const FormUpdateCategory = () => {
             onClick={handleHiddenPostProductModal}
             className="text-gray-900 rounded-md  bg-meta-7 px-3 py-2 text-sm font-semibold text-white"
           >
-            Cancel
+            Cancelar
           </button>
           <button
             type="submit"
-            onClick={() => {
-              console.log('presiono aqui');
-            }}
             disabled={handleDisabledButtonActualizar}
             className={`bg-indigo-600 hover:bg-indigo-500 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${handleDisabledButtonActualizar ? 'bg-bodydark' : 'bg-meta-3'
               }`}
@@ -355,7 +352,7 @@ const FormUpdateCategory = () => {
             onClick={handleHiddenPostProductModal}
             className="text-gray-900 rounded-md  bg-meta-7 px-3 py-2 text-sm font-semibold text-white"
           >
-            Cancel
+            Cancelar
           </button>
           <button
             type="submit"

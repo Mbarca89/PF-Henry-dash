@@ -20,8 +20,12 @@ const TableTwo = () => {
     product: {} as Products
   })
   const [photos, setPhotos] = useState([])
+  const [confirmation,setConfirmation] = useState({
+    show:false,
+    product:{} as Products
+  })
 
-  const [aux, setaux] = useState(false)
+  const [aux, setAux] = useState(false)
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -39,6 +43,37 @@ const TableTwo = () => {
   //     isActive: true,
   //   }));
   // }
+
+  const showConfirmation = (product:Products) => {
+    setConfirmation({
+      show:true,
+      product:product
+    })
+  }
+
+  const cancelAction = () => {
+    setConfirmation({
+      show:false,
+      product: {
+        name:'',
+        price: 0,
+        description:'',
+        stock: 0,
+        hasDiscount: false,
+        discount: 0,
+        photos: [],
+        category:'',
+        freeShipping:false,
+        sales:0,
+        rating:0,
+        reviews:[],
+        seller:{id:'', name:''},
+        isActive:false,
+        id:'',
+        ratingAverage:0
+      }
+    })
+  }
 
   const handleActivePostProductModal = () => {
     dispatch(activePostProductModal())
@@ -59,7 +94,28 @@ const TableTwo = () => {
 
   const handleDeleteProduct = (product: Products) => {
     dispatch(logicDeleteProductByID(product))
-    setaux(!aux)
+    setConfirmation({
+      show:false,
+      product: {
+        name:'',
+        price: 0,
+        description:'',
+        stock: 0,
+        hasDiscount: false,
+        discount: 0,
+        photos: [],
+        category:'',
+        freeShipping:false,
+        sales:0,
+        rating:0,
+        reviews:[],
+        seller:{id:'', name:''},
+        isActive:false,
+        id:'',
+        ratingAverage:0
+      }
+    })
+    setAux(!aux)
   }
 
   useEffect(() => {
@@ -105,6 +161,32 @@ const TableTwo = () => {
       }
     })
     setPhotos([])
+  }
+
+  const changeProductStatus = async () => {    
+    dispatch(logicDeleteProductByID(confirmation.product))
+    setConfirmation({
+      show:false,
+      product: {
+        name:'',
+        price: 0,
+        description:'',
+        stock: 0,
+        hasDiscount: false,
+        discount: 0,
+        photos: [],
+        category:'',
+        freeShipping:false,
+        sales:0,
+        rating:0,
+        reviews:[],
+        seller:{id:'', name:''},
+        isActive:false,
+        id:'',
+        ratingAverage:0
+      }
+    })
+    setAux(!aux)
   }
 
   const deletePhoto = async (index:number) => {
@@ -226,11 +308,11 @@ const TableTwo = () => {
                 {
                   product.isActive ? (
                     <p className="text-xl text-danger cursor-pointer" onClick={() => {
-                      handleDeleteProduct(product)
+                      showConfirmation(product)
                     }}><BsFillFileArrowDownFill /></p>
                   ) : (
                     <p className="text-xl text-meta-3 cursor-pointer" onClick={() => {
-                      handleDeleteProduct(product)
+                      showConfirmation(product)
                     }}><BsFillFileArrowUpFill /></p>
                   )
                 }
@@ -260,6 +342,27 @@ const TableTwo = () => {
           </div>
         </div>
       }
+      {confirmation.show && <div className="w-full h-full absolute bg-transparent flex justify-center z-99999 top-12">
+        <div className='w-90 fixed bg-boxdark flex flex-col justify-center z-99999 top-48 mx-auto my-auto'>
+          <div className="flex items-center justify-center gap-x-4">
+            <p className="text-sm text-white dark:text-white">¿Seguro que quieres cambiar el estado del producto?</p>
+          </div>
+          <div className="mt-5 mb-5 flex items-center justify-center gap-x-4">
+            <button
+              type="button"
+              onClick={changeProductStatus}
+              className=" bg-primary rounded-md px-4 py-2 text-sm font-semibold text-white"
+            >
+              SI
+            </button>
+            <button
+            onClick={cancelAction}
+              className={`bg-meta-7 rounded-md px-3 py-2 text-sm font-semibold text-white`}>
+              NO
+            </button>
+          </div>
+        </div>
+      </div>}
     </div>
   );
 };

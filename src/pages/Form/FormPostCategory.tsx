@@ -283,7 +283,7 @@ const FormPostCategory = () => {
             onClick={handleHiddenPostProductModal}
             className="text-gray-900 rounded-md  bg-meta-7 px-3 py-2 text-sm font-semibold text-white"
           >
-            Cancel
+            Cancelar
           </button>
           <button
             type="submit"
@@ -294,7 +294,7 @@ const FormPostCategory = () => {
                 : 'bg-primary'
             }`}
           >
-            Create
+            Crear
           </button>
         </div>
       </form>

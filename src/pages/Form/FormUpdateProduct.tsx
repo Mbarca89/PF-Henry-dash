@@ -9,7 +9,7 @@ import { clearCurrentProductID } from "../../store/reducers/userReducer";
 import { Categorie, Products } from "../../types";
 import { REACT_APP_SERVER_URL } from '../../../config'
 
-let images: FileList
+let images: any
 
 const FormUpdateProduct = () => {
 
@@ -35,6 +35,7 @@ const FormUpdateProduct = () => {
     const { register, control, handleSubmit, formState, reset } = form;
     const { errors, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful } = formState;
     const [currentUpdatedProduct, setcurrentUpdatedProduct] = useState<Products>()
+    const [selectedImages, setSelectedImages] = useState(0)
 
     const onSubmit = (data: Products) => {
         // dispatch(hiddenPostProductModal())
@@ -50,6 +51,8 @@ const FormUpdateProduct = () => {
 
     // hidden Modal Post Product
     const handleHiddenPostProductModal = () => {
+        setSelectedImages(0)
+        images = undefined
         dispatch(hiddenUpdateProductModal())
         dispatch(clearCurrentProductID())
     }
@@ -57,11 +60,10 @@ const FormUpdateProduct = () => {
 
     // handling images files 
     const onChangeImages = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('hago algo')
-        console.log(e.target.files)
         if (e.target.files) {
             images = e.target.files
         }
+        setSelectedImages(images.length)
     };
 
 
@@ -70,7 +72,7 @@ const FormUpdateProduct = () => {
         let formData = new FormData();
 
         formData.append('data', JSON.stringify(currentUpdatedProduct))
-        if(images){
+        if (images) {
             if (images.length) {
                 for (let i = 0; i < images.length; i++) {
                     formData.append('photos', images[i])
@@ -84,31 +86,29 @@ const FormUpdateProduct = () => {
     }
 
     useEffect(() => {
-        if (isSubmitted) {
-            if (isSubmitSuccessful) {
-
-                dispatch(hiddenUpdateProductModal())
-
-
-                uploadUpdatedProduct(currentUpdatedProduct as Products).then(response => {
-
-
-                    dispatch(activeToast({
-                        isOk: true,
-                        message: `El producto ${response?.data?.name} fue actualizado exitosamente`
-                    }))
-                    dispatch(getProducts(currentUser.id))
-                }).catch(error => {
-
-
-                    dispatch(activeToast({
-                        isOk: false,
-                        message: `Ocurrio un problema. ${error}`
-                    }))
-                })
-                reset()
+        const upload = async () => {
+            if (isSubmitted) {
+                if (isSubmitSuccessful) {
+                    await uploadUpdatedProduct(currentUpdatedProduct as Products).then(response => {
+                        dispatch(activeToast({
+                            isOk: true,
+                            message: `El producto ${response?.data?.name} fue actualizado exitosamente`
+                        }))
+                        dispatch(getProducts(currentUser.id))
+                    }).catch(error => {
+                        dispatch(activeToast({
+                            isOk: false,
+                            message: `Ocurrio un problema. ${error}`
+                        }))
+                    })
+                    dispatch(hiddenUpdateProductModal())
+                    reset()
+                    setSelectedImages(0)
+                    images = undefined
+                }
             }
         }
+        upload()
         reset(currentProductbyID)
 
     }, [isSubmitSuccessful, reset, currentProductbyID])
@@ -226,7 +226,7 @@ const FormUpdateProduct = () => {
                                             value: /^[A-Za-z0-9\s]+$/,
                                             message: "La descripcion es invalida.."
                                         },
-                                    })} rows={3} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "></textarea>
+                                    })} rows={3} className="px-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "></textarea>
                                     <p className="text-xs">{errors.description?.message}</p>
                                 </div>
                             </div>
@@ -237,12 +237,13 @@ const FormUpdateProduct = () => {
                                         <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                             <path fillRule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clipRule="evenodd" />
                                         </svg>
-                                        <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                                        <div className="mt-4 flex text-sm leading-6 text-gray-600 justify-center">
                                             <label htmlFor="file-upload-update" className='relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'>
-                                                <span>Upload a file</span>
-                                                <input id="file-upload-update" className="sr-only" onChange={(onChangeImages)} type="file"  multiple />
+                                                <span>Elegir Imagenes</span>
+                                                <input id="file-upload-update" className="sr-only" onChange={(onChangeImages)} type="file" multiple />
                                             </label>
                                         </div>
+                                        <p className="text-xs leading-5 text-gray-600">{selectedImages} imágenes seleccionadas</p>
                                     </div>
                                 </div>
                             </div>
@@ -251,8 +252,8 @@ const FormUpdateProduct = () => {
                 </div>
 
                 <div className="flex items-center justify-end gap-x-4">
-                    <button type="button" onClick={handleHiddenPostProductModal} className="text-sm font-semibold  text-gray-900 px-3 py-2 rounded-md bg-meta-7 text-white">Cancel</button>
-                    <button type="submit" disabled={!isDirty || !isValid || isSubmitting} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting) ? "bg-bodydark" : "bg-meta-3"}`}>Update</button>
+                    <button type="button" onClick={handleHiddenPostProductModal} className="text-sm font-semibold  text-gray-900 px-3 py-2 rounded-md bg-meta-7 text-white">Cancelar</button>
+                    <button type="submit" disabled={!isDirty || !isValid || isSubmitting} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting) ? "bg-bodydark" : "bg-meta-3"}`}>Actualizar</button>
                 </div>
             </form>
             <DevTool control={control} />

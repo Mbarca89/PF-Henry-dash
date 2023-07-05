@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { CgProfile } from 'react-icons/cg'
 import UserOne from '../images/user/user-01.png';
 import { RootState, useAppDispatch, useAppSelector } from '../store';
 import { getUser } from '../store/thunks';
 import { setCurrentUser, setSession } from '../store/reducers/userReducer';
 
 const DropdownUser = () => {
-  const user = useAppSelector((state:RootState) => state.user.userData)
+  const user = useAppSelector((state: RootState) => state.user.userData)
   const dispatch = useAppDispatch();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -19,7 +19,7 @@ const DropdownUser = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     dispatch(setSession(false));
-    window.location.href="/";
+    window.location.href = "/";
   }
   // onLogout
 
@@ -28,7 +28,7 @@ const DropdownUser = () => {
   // close on click outside
   useEffect(() => {
     // dispatch(getUser())
-    
+
     const clickHandler = ({ target }: MouseEvent) => {
       if (!dropdown.current) return;
       if (
@@ -41,7 +41,7 @@ const DropdownUser = () => {
     };
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
-  },[]);
+  }, []);
 
   // close if the esc key is pressed
   useEffect(() => {
@@ -60,7 +60,7 @@ const DropdownUser = () => {
     //   dispatch(setCurrentUser({...JSON.parse(item)}))
     // }
   }, [user])
-  
+
 
   return (
     <div className="relative">
@@ -74,17 +74,16 @@ const DropdownUser = () => {
           <span className="block text-sm font-medium text-black dark:text-white">
             {user?.name}
           </span>
-          <span className="block text-xs">{user?.role}</span>
+          <span className="block text-xs">{user?.role === 'admin' ? 'Administrador' : 'Vendedor'}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+          <CgProfile size={45}/>
         </span>
 
         <svg
-          className={`hidden fill-current sm:block ${
-            dropdownOpen ? 'rotate-180' : ''
-          }`}
+          className={`hidden fill-current sm:block ${dropdownOpen ? 'rotate-180' : ''
+            }`}
           width="12"
           height="8"
           viewBox="0 0 12 8"
@@ -105,9 +104,8 @@ const DropdownUser = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ${
-          dropdownOpen === true ? 'block' : 'hidden'
-        }`}
+        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ${dropdownOpen === true ? 'block' : 'hidden'
+          }`}
       >
         {/* <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
           <li>

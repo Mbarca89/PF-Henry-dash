@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Logo from '../images/logo/logo-icon.svg';
+import logo_white from '../images/logo/logo_white.png';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import DropdownUser from './DropdownUser';
 
@@ -55,7 +56,7 @@ const Header = (props: {
           {/* <!-- Hamburger Toggle BTN --> */}
 
           <Link className="block flex-shrink-0 lg:hidden" to="/">
-            <img src={Logo} alt="Logo" />
+            <img src={logo_white} alt="Logo" className='w-auto h-20'/>
           </Link>
         </div>
 

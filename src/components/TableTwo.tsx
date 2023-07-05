@@ -345,7 +345,7 @@ const TableTwo = () => {
                 return (
                   <div key={crypto.randomUUID()} className='bg-white rounded-xl relative'>
                     <p onClick={() => deletePhoto(index)} className='cursor-pointer w-5 absolute right-1 text-danger'><AiFillCloseCircle size={20} /></p>
-                    <img src={photo.url} className='w-auto h-auto'></img>
+                    <img src={photo.url} className=''></img>
                   </div>
                 )
               })}

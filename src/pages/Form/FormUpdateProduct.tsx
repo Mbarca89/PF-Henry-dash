@@ -137,46 +137,19 @@ const FormUpdateProduct = () => {
                                     <p className="text-xs">{errors.name?.message}</p>
                                 </div>
                             </div>
-                            <div className="sm:col-span-4">
+                            <div className="sm:col-span-3">
                                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Categoria</label>
                                 <div className="mt-2">
                                     <select {...register("category")}>
                                         {
                                             categories.map((category: Categorie) => {
-                                                return <option key={category.id} value={category.id}>{category.categoryName}</option>
+                                                return <option key={category.id} value={category.id} className="w-min">{category.categoryName}</option>
                                             })
                                         }
                                     </select>
                                 </div>
                             </div>
-                            <div className="sm:col-span-2 flex row-span-3 justify-center items-center">
-                                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Envio Gratis</label>
-                                <input type="checkbox" {...register("freeShipping")} id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-                            </div>
-                            <div className="sm:col-span-2 flex row-span-1 justify-center items-center">
-                                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Descuento</label>
-                                <input type="checkbox" {...register("hasDiscount")} id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-                            </div>
                             <div className="sm:col-span-2">
-                                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">% Descuento</label>
-                                <div className="mt-2">
-                                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
-                                        <input type="text" {...register("discount", {
-                                            required: {
-                                                value: true,
-                                                message: "El descuento es requerido."
-                                            },
-                                            validate: {
-                                                isNumber: (fieldValue) => {
-                                                    return (!isNaN(Number(fieldValue)) && Number(fieldValue) > 0) || "La cantidad es invalida."
-                                                }
-                                            }
-                                        })} id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full" placeholder="cantidad" />
-                                    </div>
-                                    <p className="text-xs">{errors.stock?.message}</p>
-                                </div>
-                            </div>
-                            <div className="sm:col-span-4">
                                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Precio</label>
                                 <div className="mt-2">
                                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -195,7 +168,7 @@ const FormUpdateProduct = () => {
                                     <p className="text-xs">{errors.price?.message}</p>
                                 </div>
                             </div>
-                            <div className="sm:col-span-2">
+                            <div className="sm:col-span-1">
                                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Cantidad</label>
                                 <div className="mt-2">
                                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
@@ -203,6 +176,33 @@ const FormUpdateProduct = () => {
                                             required: {
                                                 value: true,
                                                 message: "La cantidad es requerida."
+                                            },
+                                            validate: {
+                                                isNumber: (fieldValue) => {
+                                                    return (!isNaN(Number(fieldValue)) && Number(fieldValue) > 0) || "La cantidad es invalida."
+                                                }
+                                            }
+                                        })} id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full" placeholder="cantidad" />
+                                    </div>
+                                    <p className="text-xs">{errors.stock?.message}</p>
+                                </div>
+                            </div>
+                            <div className="sm:col-span-2 flex justify-center items-center">
+                                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Envio Gratis</label>
+                                <input type="checkbox" {...register("freeShipping")} id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                            </div>
+                            <div className="sm:col-span-2 flex row-span-1 justify-center items-center">
+                                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Descuento</label>
+                                <input type="checkbox" {...register("hasDiscount")} id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                            </div>
+                            <div className="sm:col-span-2">
+                                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">% Descuento</label>
+                                <div className="mt-2">
+                                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+                                        <input type="text" {...register("discount", {
+                                            required: {
+                                                value: true,
+                                                message: "El descuento es requerido."
                                             },
                                             validate: {
                                                 isNumber: (fieldValue) => {

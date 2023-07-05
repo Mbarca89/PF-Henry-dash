@@ -63,6 +63,7 @@ const FormUpdateCategory = () => {
   const activeDrop = useState(false);
   const [handleDisabledButtonEliminar, sethandleDisabledButtonEliminar] = useState(true)
   const [handleDisabledButtonActualizar, sethandleDisabledButtonActualizar] = useState(true)
+  const [aux,setAux] = useState(false)
 
   const form = useForm<formValues>({
     mode: 'all',
@@ -104,7 +105,7 @@ const FormUpdateCategory = () => {
 
         setTimeout(() => {
           // Refresh the page
-          window.location.reload();
+          setAux(!aux)
         }, 800);
       }
 
@@ -147,7 +148,7 @@ const FormUpdateCategory = () => {
 
         setTimeout(() => {
           // Refresh the page
-          window.location.reload();
+          setAux(!aux)
         }, 800);
       }
 
@@ -180,7 +181,7 @@ const FormUpdateCategory = () => {
       .catch((error) => {
         console.log('Error fetching categories:', error);
       });
-  }, [dispatch]);
+  }, [dispatch,aux]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation(); // Stop the event from propagating to the button

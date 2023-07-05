@@ -17,6 +17,7 @@ const FormUpdateProduct = () => {
     const currentProductbyID = useAppSelector((state: RootState) => state.user.currentProductbyID)
     const categories = useAppSelector((state: RootState) => state.user.categories)
     const [onChangeUpdateImage, setonChangeUpdateImage] = useState(false)
+    const [uploading, setUploading] = useState(false)
 
     const dispatch = useAppDispatch();
     const activeDrop = useState(false)
@@ -95,6 +96,7 @@ const FormUpdateProduct = () => {
         const upload = async () => {
             if (isSubmitted) {
                 if (isSubmitSuccessful) {
+                    setUploading(true)
                     await uploadUpdatedProduct(currentUpdatedProduct as Products).then(response => {
                         dispatch(activeToast({
                             isOk: true,
@@ -107,6 +109,7 @@ const FormUpdateProduct = () => {
                             message: `Ocurrio un problema. ${error}`
                         }))
                     })
+                    setUploading(false)
                     dispatch(hiddenUpdateProductModal())
                     reset()
                     setSelectedImages(0)
@@ -258,10 +261,12 @@ const FormUpdateProduct = () => {
                 </div>
 
                 <div className="flex items-center justify-end gap-x-4">
-                    <button type="button" onClick={handleHiddenPostProductModal} className="text-sm font-semibold  text-gray-900 px-3 py-2 rounded-md bg-meta-7 text-white">Cancelar</button>
+                    {!uploading && <button type="button" onClick={handleHiddenPostProductModal} className="text-sm font-semibold  text-gray-900 px-3 py-2 rounded-md bg-meta-7 text-white">Cancelar</button>}
                     {/* <button type="submit" disabled={!isDirty || !isValid || isSubmitting} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting) ? "bg-bodydark" : "bg-meta-3"}`}>Actualizar</button> */}
                     {/* <button type="submit" disabled={!isDirty || !isValid || isSubmitting || !onChangeUpdateImage} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting || !onChangeUpdateImage) ? "bg-bodydark" : "bg-meta-3"}`}>Actualizar</button> */}
-                    <button type="submit" className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-meta-3`}>Actualizar</button>
+                    {!uploading ? <button type="submit" className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-meta-3`}>Actualizar</button>:<div
+        className="h-10 w-10 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"
+      ></div>}
                 </div>
             </form>
             <DevTool control={control} />

@@ -198,7 +198,7 @@ const TableTwo = () => {
       setPhotos(data)
       dispatch(activeToast({
         isOk: true,
-        message: "Imagen agregada correctamente."
+        message: "Imagen eliminada correctamente."
       }))
     } catch (error: any) {
       // console.log(error)

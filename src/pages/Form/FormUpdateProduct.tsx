@@ -16,6 +16,7 @@ const FormUpdateProduct = () => {
     const currentProductID = useAppSelector((state: RootState) => state.user.currentProductID)
     const currentProductbyID = useAppSelector((state: RootState) => state.user.currentProductbyID)
     const categories = useAppSelector((state: RootState) => state.user.categories)
+    const [onChangeUpdateImage, setonChangeUpdateImage] = useState(false)
 
     const dispatch = useAppDispatch();
     const activeDrop = useState(false)
@@ -51,6 +52,8 @@ const FormUpdateProduct = () => {
 
     // hidden Modal Post Product
     const handleHiddenPostProductModal = () => {
+        console.log("onchangeimages");
+        setonChangeUpdateImage(false)
         setSelectedImages(0)
         images = undefined
         dispatch(hiddenUpdateProductModal())
@@ -60,6 +63,9 @@ const FormUpdateProduct = () => {
 
     // handling images files 
     const onChangeImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("onchangeimages");
+        
+        setonChangeUpdateImage(true)
         if (e.target.files) {
             images = e.target.files
         }
@@ -253,7 +259,9 @@ const FormUpdateProduct = () => {
 
                 <div className="flex items-center justify-end gap-x-4">
                     <button type="button" onClick={handleHiddenPostProductModal} className="text-sm font-semibold  text-gray-900 px-3 py-2 rounded-md bg-meta-7 text-white">Cancelar</button>
-                    <button type="submit" disabled={!isDirty || !isValid || isSubmitting} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting) ? "bg-bodydark" : "bg-meta-3"}`}>Actualizar</button>
+                    {/* <button type="submit" disabled={!isDirty || !isValid || isSubmitting} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting) ? "bg-bodydark" : "bg-meta-3"}`}>Actualizar</button> */}
+                    {/* <button type="submit" disabled={!isDirty || !isValid || isSubmitting || !onChangeUpdateImage} className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${(!isDirty || !isValid || isSubmitting || !onChangeUpdateImage) ? "bg-bodydark" : "bg-meta-3"}`}>Actualizar</button> */}
+                    <button type="submit" className={`rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-meta-3`}>Actualizar</button>
                 </div>
             </form>
             <DevTool control={control} />
